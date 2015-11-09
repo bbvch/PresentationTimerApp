@@ -1,2 +1,2 @@
 # PresentationTimerApp
-Timer app for presenttions
+Timer app for presentions
