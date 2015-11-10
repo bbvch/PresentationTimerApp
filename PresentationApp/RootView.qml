@@ -118,34 +118,30 @@ ColumnLayout {
         text: "start"
         id: buttonStart
         anchors.bottom: parent.bottom
-        anchors.right: parent.right
+        anchors.right: buttonReset.visible ? buttonReset.left : parent.right
         anchors.left: parent.left
+      //  anchors.fill: width
         onClicked: {
             if(!cppPresentationTimer.isRunning){
                 startPresentation()
             }
             else
             {
-                stopPresentation()
+                pausePresentation()
             }
         }
     }
 
     Button {
-        text: "start"
+        text: "Reset"
         visible: false
         id: buttonReset
+        anchors.leftMargin: 10
         anchors.bottom: parent.bottom
         anchors.right: parent.right
-        anchors.left: parent.left
         onClicked: {
-            if(!cppPresentationTimer.isRunning){
-                startPresentation()
-            }
-            else
-            {
                 stopPresentation()
-            }
+
         }
     }
 
@@ -156,8 +152,9 @@ ColumnLayout {
         if(cppPresentationTimer.startTimer()) {
         console.log("Pr time"+cppPresentationTimer.presentationTime)
         //cppPresentationTimer.isRunning = true;
-        rectangle.color = "green"
-        buttonStart.text = "Stop"
+        //rectangle.color = "green"
+        buttonStart.text = "Pause"
+            buttonReset.visible = true
             Qt.inputMethod.hide();
         }
     }
@@ -167,9 +164,15 @@ ColumnLayout {
         cppPresentationTimer.stopTimer()
         rectangle.color = "green"
         buttonStart.text = "Start"
+        buttonReset.visible = false
         stopwatchSec.text = cppPresentationTimer.presentationTime%60
         stopwatchMin.text=Math.floor(cppPresentationTimer.presentationTime/60)%60
         stopwatchHour.text=Math.floor(cppPresentationTimer.presentationTime/3600)
+    }
+    function pausePresentation() {
+
+        cppPresentationTimer.stopTimer()
+        buttonStart.text = "Resume"
     }
     Connections {
         target: cppPresentationTimer
@@ -182,8 +185,8 @@ ColumnLayout {
             stopwatchSec.text = cppPresentationTimer.remainingTime%60
         }
         onRunningChanged: {
-            if(!cppPresentationTimer.isRunning)
-                stopPresentation()
+           // if(!cppPresentationTimer.isRunning)
+            //    stopPresentation()
         }
     }
 
