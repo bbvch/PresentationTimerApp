@@ -6,6 +6,9 @@ Item {
     id: rootView
     anchors.fill: parent
     anchors.margins: 10
+    //we are detecting states: stopped, running, paused
+    state: "stopped"
+    onStateChanged: console.log("New State:"+state)
     /*Rectangle {
         id: spacingRectangle
         anchors.top: parent.top
@@ -89,7 +92,7 @@ ColumnLayout {
         id: rectangle
         //anchors.fill: width
         anchors.top: parent.top
-        anchors.bottom: buttonStart.top
+        anchors.bottom: layoutButtons.top
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottomMargin: 10
@@ -113,20 +116,29 @@ ColumnLayout {
             }
         }
     }
-
+RowLayout {
+    id: layoutButtons
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
     Button {
         text: "start"
         id: buttonStart
-        anchors.bottom: parent.bottom
-        anchors.right: buttonReset.visible ? buttonReset.left : parent.right
-        anchors.left: parent.left
+        Layout.fillWidth: true
+
+        //anchors.right: buttonReset.visible ? buttonReset.left : parent.right
+
+
       //  anchors.fill: width
         onClicked: {
-            if(!cppPresentationTimer.isRunning){
+            if(rootView.state=="stopped"){
                 startPresentation()
             }
             else
             {
+                if(rootView.state=="paused")
+                    startCountdown()
+                else
                 pausePresentation()
             }
         }
@@ -136,26 +148,34 @@ ColumnLayout {
         text: "Reset"
         visible: false
         id: buttonReset
-        anchors.leftMargin: 10
-        anchors.bottom: parent.bottom
-        anchors.right: parent.right
+        Layout.fillWidth: true
+        //anchors.leftMargin: 10
+       // anchors.bottom: parent.bottom
+        //anchors.right: parent.right
+       // anchors.left: buttonStart.right
         onClicked: {
                 stopPresentation()
 
         }
     }
+}
 
 
 
     function startPresentation() {
         cppPresentationTimer.presentationTime = parseInt(stopwatchHour.text)*60*60+parseInt(stopwatchMin.text)*60+parseInt(stopwatchSec.text)
+        startCountdown()
+    }
+
+    function startCountdown() {
         if(cppPresentationTimer.startTimer()) {
-        console.log("Pr time"+cppPresentationTimer.presentationTime)
-        //cppPresentationTimer.isRunning = true;
-        //rectangle.color = "green"
         buttonStart.text = "Pause"
             buttonReset.visible = true
             Qt.inputMethod.hide();
+            stopwatchHour.focus = false
+            stopwatchMin.focus = false
+            stopwatchSec.focus = false
+            rootView.state = "running"
         }
     }
 
@@ -168,11 +188,13 @@ ColumnLayout {
         stopwatchSec.text = cppPresentationTimer.presentationTime%60
         stopwatchMin.text=Math.floor(cppPresentationTimer.presentationTime/60)%60
         stopwatchHour.text=Math.floor(cppPresentationTimer.presentationTime/3600)
+        rootView.state = "stopped"
     }
     function pausePresentation() {
 
         cppPresentationTimer.stopTimer()
         buttonStart.text = "Resume"
+        rootView.state = "paused"
     }
     Connections {
         target: cppPresentationTimer
@@ -185,8 +207,8 @@ ColumnLayout {
             stopwatchSec.text = cppPresentationTimer.remainingTime%60
         }
         onRunningChanged: {
-           // if(!cppPresentationTimer.isRunning)
-            //    stopPresentation()
+            if((!cppPresentationTimer.isRunning)&&(cppPresentationTimer.remainingTime==0))
+                stopPresentation()
         }
     }
 
