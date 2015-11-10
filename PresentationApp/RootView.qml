@@ -43,6 +43,7 @@ ColumnLayout {
         anchors.left: parent.left
         anchors.right: parent.right
         inputMethodHints:Qt.ImhDigitsOnly
+        KeyNavigation.tab: stopwatchMin
     }
     }
 ColumnLayout {
@@ -63,6 +64,7 @@ ColumnLayout {
         anchors.left: parent.left
         anchors.right: parent.right
         inputMethodHints:Qt.ImhDigitsOnly
+        KeyNavigation.tab: stopwatchSec
     }
     }
 ColumnLayout {
@@ -83,6 +85,7 @@ ColumnLayout {
         maximumLength: 2
         anchors.left: parent.left
         anchors.right: parent.right
+        KeyNavigation.tab: buttonStart
     }
     }
 
@@ -125,6 +128,7 @@ RowLayout {
         text: "start"
         id: buttonStart
         Layout.fillWidth: true
+        KeyNavigation.tab: stopwatchHour
 
         //anchors.right: buttonReset.visible ? buttonReset.left : parent.right
 
