@@ -16,11 +16,17 @@ public:
     ~PresentationTimer();
 
 signals:
+    /** Signals a Yellow Alarm */
     void alarmYellow();
+    /** Signals a Red Alarm */
     void alarmRed();
-    void tick();
+    /** Signals a timer tick (aka. one Second) */
+//    void tick();
+    /** Signals that */
     void runningChanged();
+    /** Signals that the presentation time has changed */
     int presentationTimeChanged();
+    /** Signals a Timer tick (aka. one Second */
     void presentationTimerTick();
 
 public slots:
@@ -29,7 +35,8 @@ public slots:
     bool setThresholdAlarms(double yellow, double red);
     bool startTimer();
     bool stopTimer();
-    void changeRunningState(bool);
+    /** change Running state, returns true if the Timer has now been started, false otherwise */
+    bool changeRunningState(bool);
 
 private slots:
     /** The slot for the internally used timer */

@@ -40,9 +40,10 @@ bool PresentationTimer::startTimer()
 {
     if(mTime>=mPresentationTime)
         return false;
-
+if(!mTimer->isActive()) {
     mTimer->start();
-    qDebug() << "Started timer";
+    emit runningChanged();
+}
     return true;
 }
 
@@ -50,17 +51,22 @@ bool PresentationTimer::stopTimer()
 {
     if(mTime>=mPresentationTime)
         return false;
-qDebug() << "Stopped timer";
+    if(mTimer->isActive()) {
     mTimer->stop();
+    emit runningChanged();
+    }
     return true;
 }
 
-void PresentationTimer::changeRunningState(bool)
+bool PresentationTimer::changeRunningState(bool)
 {
     if(mTimer->isActive())
         stopTimer();
     else
-        startTimer();
+        if(startTimer())
+            return true;
+
+    return false;
 }
 
 int PresentationTimer::timerTick()
