@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.2
 
 Item {
     id: rootView
-    anchors.fill: parent
+    //anchors.fill: parent
     anchors.margins: 10
     //we are detecting states: stopped, running, paused
     state: "stopped"

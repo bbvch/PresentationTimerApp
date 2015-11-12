@@ -1,9 +1,13 @@
 TEMPLATE = app
 
 QT += testlib qml
+CONFIG   += C++11
 SOURCES += \
     ../PresentationApp/presentationtimer.cpp \
-    testpresentationtimer.cpp
+../PresentationApp/settings.cpp \
+    testpresentationtimer.cpp \
+    testsettings.cpp \
+    main.cpp
 
 
 #RESOURCES += qml.qrc
@@ -16,7 +20,9 @@ SOURCES += \
 
 HEADERS += \
     ../PresentationApp/presentationtimer.h \
-    testpresentationtimer.h
+../PresentationApp/settings.h \
+    testpresentationtimer.h \
+    testsettings.h
 
 INCLUDEPATH += ../PresentationApp/
 

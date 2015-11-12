@@ -11,13 +11,13 @@ Item {
     width: childrenRect.width
 Label {
     id: labelAlarm
-    text: "Alarm "+alarmNr
+    text: qsTr("Alarm "+alarmNr)
     font.bold: true
 }
 Label {
     id: labelAlarmType
     anchors.top: labelAlarm.bottom
-        text: "Please choose a type of alarm"+alarmNr
+        text: qsTr("Please choose a type of alarm"+alarmNr)
 }
 Switch {
 id: switchAlarmType
@@ -27,7 +27,7 @@ checked: alarmType
 Label {
 id: labelValueAlarm
 anchors.top: switchAlarmType.bottom
-    text: "Please choose a value for alarm"+alarmNr
+    text: qsTr("Please choose a value for alarm"+alarmNr)
 }
 Slider {
 id: sliderValueAlarm
@@ -61,11 +61,11 @@ onValueChanged:  {
 Label {
     id: labelColorAlarm
     anchors.top: valueAlarm.bottom
-    text: "Please choose a Value for the alarm"+alarmNr
+    text: qsTr("Please choose a Value for the alarm"+alarmNr)
 }
 
 Button {
-    text: "Pick color"
+    text: qsTr("Pick the alarm color")
     id: buttonColorPickAlarm
    // anchors.top:
     onClicked: {

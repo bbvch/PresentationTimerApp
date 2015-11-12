@@ -74,7 +74,7 @@ void TestPresentationTimer::alarms_are_being_signaled()
     QCOMPARE(spyRed.count(),1);
 }
 
-QTEST_MAIN(TestPresentationTimer)
+//QTEST_MAIN(TestPresentationTimer)
 //#include "testpresentationtimer.moc"
 
 //#include "moc_testpresentationtimer.o"

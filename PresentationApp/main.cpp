@@ -31,6 +31,11 @@ void keepScreenOn()
 
 int main(int argc, char *argv[])
 {
+
+    QCoreApplication::setOrganizationName("bbv Software Solutions AG");
+    QCoreApplication::setOrganizationDomain("com.bbvSoftwareSolutions");
+    QCoreApplication::setApplicationName("PresentationTimerApp");
+
 #ifdef Q_OS_ANDROID
     keepScreenOn();
 #endif

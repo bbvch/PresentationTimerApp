@@ -3,7 +3,8 @@ TEMPLATE = app
 QT += qml quick
 
 SOURCES += main.cpp \
-    presentationtimer.cpp
+    presentationtimer.cpp \
+    settings.cpp
 
 RESOURCES += qml.qrc
 
@@ -29,4 +30,5 @@ ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 }
 
 HEADERS += \
-    presentationtimer.h
+    presentationtimer.h \
+    settings.h

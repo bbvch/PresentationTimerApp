@@ -22,12 +22,10 @@ Window {
                              event.accepted = true;
                              mainWindow.goBack()
                          }*/
-        initialItem: MenuView {
-                    id: rootView
-                }
-        /*initialItem: RootView {
+
+        initialItem: RootView {
             id: rootView
-        }*/
+        }
         onCurrentItemChanged: {
             if(stack.currentItem!=null)
                 if(stack.currentItem.state==="showingRoot")
@@ -46,7 +44,7 @@ Window {
     //Keys.onMenuPressed:
     Keys.onReleased:
     {
-    if((event.key==Qt.Key_Menu)) {
+    if((event.key==Qt.Key_Menu)||(event.key==Qt.Key_1)) {
         console.log("Menu pressed")
         stack.push("qrc:///MenuView.qml")
     }
