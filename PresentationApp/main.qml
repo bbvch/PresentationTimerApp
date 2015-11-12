@@ -9,6 +9,7 @@ Window {
     id: mainWindow
     property int currentTime
     property int presentationTime
+    property int dpi: Screen.pixelDensity*25.4
     width: 400
     height: 400
     StackView {
@@ -17,13 +18,16 @@ Window {
         width: parent.width
         focus: true
         property string searchResultsTitle
-        Keys.onReleased: if ((event.key === Qt.Key_F1 || event.key === Qt.Key_Back) && stack.depth > 1) {
+        /*Keys.onReleased: if ((event.key === Qt.Key_F1 || event.key === Qt.Key_Back) && stack.depth > 1) {
                              event.accepted = true;
                              mainWindow.goBack()
-                         }
-        initialItem: RootView {
+                         }*/
+        initialItem: MenuView {
+                    id: rootView
+                }
+        /*initialItem: RootView {
             id: rootView
-        }
+        }*/
         onCurrentItemChanged: {
             if(stack.currentItem!=null)
                 if(stack.currentItem.state==="showingRoot")
@@ -36,8 +40,25 @@ Window {
                     toolbar_text.text = stack.searchResultsTitle
 
         }
+
+
+
+    //Keys.onMenuPressed:
+    Keys.onReleased:
+    {
+    if((event.key==Qt.Key_Menu)) {
+        console.log("Menu pressed")
+        stack.push("qrc:///MenuView.qml")
     }
-    property int dpi: Screen.pixelDensity*25.4
-
-
+    //if(event.key==Qt.Key_1)
+       // stack.push("qrc:///MenuView.qml")
+    }
+}
+    Menu {
+        title: "test"
+        MenuItem {
+            text: "Cut"
+            shortcut: "Ctrl+X"
+        }
+    }
 }

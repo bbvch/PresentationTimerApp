@@ -2,5 +2,7 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>RootView.qml</file>
+        <file>MenuView.qml</file>
+        <file>AlarmSettings.qml</file>
     </qresource>
 </RCC>

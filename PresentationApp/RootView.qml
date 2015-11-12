@@ -177,8 +177,11 @@ RowLayout {
             buttonReset.visible = true
             Qt.inputMethod.hide();
             stopwatchHour.focus = false
+            stopwatchHour.enabled = false
             stopwatchMin.focus = false
+            stopwatchMin.enabled = false
             stopwatchSec.focus = false
+            stopwatchSec.enabled = false
             rootView.state = "running"
         }
     }
@@ -192,6 +195,9 @@ RowLayout {
         stopwatchSec.text = cppPresentationTimer.presentationTime%60
         stopwatchMin.text=Math.floor(cppPresentationTimer.presentationTime/60)%60
         stopwatchHour.text=Math.floor(cppPresentationTimer.presentationTime/3600)
+        stopwatchHour.enabled = true
+        stopwatchMin.enabled = true
+        stopwatchSec.enabled = true
         rootView.state = "stopped"
     }
     function pausePresentation() {
