@@ -85,7 +85,10 @@ Rectangle {
         alarmValue: cppSettings.alarm2Value
         onAlarmTypeChanged: cppSettings.alarm2Type = alarmType
         onAlarmColorChanged: cppSettings.alarm2Color = alarmColor
-        onAlarmValueChanged: cppSettings.alarm2Value = alarmValue
+        onAlarmValueChanged: {
+            console.log("Alarm value changed"+alarmValue)
+            cppSettings.alarm2Value = alarmValue
+        }
     }
 Button {
     id: buttonBack

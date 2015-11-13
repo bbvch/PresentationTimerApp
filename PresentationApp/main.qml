@@ -18,10 +18,18 @@ Window {
         width: parent.width
         focus: true
         property string searchResultsTitle
-        /*Keys.onReleased: if ((event.key === Qt.Key_F1 || event.key === Qt.Key_Back) && stack.depth > 1) {
+        Keys.onReleased: {
+            if ((event.key === Qt.Key_F2 || event.key === Qt.Key_Back) && stack.depth > 1) {
                              event.accepted = true;
-                             mainWindow.goBack()
-                         }*/
+                             stack.pop()
+                         }
+            if(((event.key===Qt.Key_Menu)||(event.key===Qt.Key_F1))&&(stack.currentItem==rootView)) {
+                console.log("Menu pressed")
+                stack.push("qrc:///MenuView.qml")
+                console.log(stack.currentItem)
+            }
+        }
+
 
         initialItem: RootView {
             id: rootView
@@ -43,25 +51,5 @@ Window {
                     toolbar_text.text = stack.searchResultsTitle
         }*/
 
-
-
-    //Keys.onMenuPressed:
-    Keys.onReleased:
-    {
-    if(((event.key==Qt.Key_Menu)||(event.key==Qt.Key_1))&&(stack.currentItem==rootView)) {
-        console.log("Menu pressed")
-        stack.push("qrc:///MenuView.qml")
-        console.log(stack.currentItem)
-    }
-    //if(event.key==Qt.Key_1)
-       // stack.push("qrc:///MenuView.qml")
-    }
-}
-    Menu {
-        title: "test"
-        MenuItem {
-            text: "Cut"
-            shortcut: "Ctrl+X"
-        }
     }
 }

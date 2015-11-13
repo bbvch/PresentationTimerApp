@@ -6,6 +6,8 @@ Item {
     property int alarmNr: 1
     property bool alarmType: false
     property int alarmValue: 50
+    property int alarmPercentageValue: alarmValue
+    property int alarmTimeValue: alarmValue
     property color alarmColor: "red"
     height: childrenRect.height
     width: childrenRect.width
@@ -23,6 +25,7 @@ Switch {
 id: switchAlarmType
 anchors.top: labelAlarmType.bottom
 checked: alarmType
+onCheckedChanged: alarmType = checked
 }
 Label {
 id: labelValueAlarm
@@ -34,15 +37,16 @@ id: sliderValueAlarm
 //anchors.fill: width
 //width: 100
 width: 2.0*parent.width/3
-value: valueAlarm.value
+value: alarmPercentageValue
 visible: !switchAlarmType.checked
 minimumValue: 0
-//maximumValue: 100
+maximumValue: 100
 anchors.top: labelValueAlarm.bottom
 onValueChanged: {
     if(valueAlarm.value != sliderValueAlarm.value)
         valueAlarm.value = sliderValueAlarm.value
-    alarmValue = valueAlarm.value
+    alarmPercentageValue = valueAlarm.value
+    console.log("Slider changed")
 }
 }
 SpinBox {
@@ -50,19 +54,20 @@ id: valueAlarm
 anchors.top: labelValueAlarm.bottom
 anchors.left: sliderValueAlarm.right
 visible: !switchAlarmType.checked
-value: alarmValue
+value: alarmPercentageValue
 width: parent.width/3
 onValueChanged:  {
     if(sliderValueAlarm.value != valueAlarm.value)
     sliderValueAlarm.value = valueAlarm.value
-    alarmValue = valueAlarm.value
+    alarmPercentageValue = valueAlarm.value
+    console.log("Spinbox changed")
 }
 }
 SpinBox {
 id: valueTimeAlarmHours
 anchors.top: labelValueAlarm.bottom
 visible: switchAlarmType.checked
-value: Math.floor(alarmValue/3600)
+value: Math.floor(alarmTimeValue/3600)
 width: parent.width/3
 minimumValue: 0
 decimals: 0
@@ -75,7 +80,7 @@ minimumValue: 0
 anchors.top: labelValueAlarm.bottom
 anchors.left: valueTimeAlarmHours.right
 visible: switchAlarmType.checked
-value: Math.floor(alarmValue/60)%60
+value: Math.floor(alarmTimeValue/60)%60
 width: parent.width/3
 decimals: 0
 onValueChanged: updateTimeAlarmValue()
@@ -85,7 +90,7 @@ id: valueTimeAlarmSeconds
 anchors.top: labelValueAlarm.bottom
 anchors.left: valueTimeAlarmMinutes.right
 visible: switchAlarmType.checked
-value: alarmValue%60
+value: alarmTimeValue%60
 maximumValue: 59
 minimumValue: 0
 width: parent.width/3
@@ -137,7 +142,15 @@ ColorDialog {
 
 }
 function updateTimeAlarmValue() {
-    alarmValue = ((valueTimeAlarmHours.value*60)+valueTimeAlarmMinutes.value*60)+valueTimeAlarmSeconds.value
+    alarmValue = ((valueTimeAlarmHours.value*60)+valueTimeAlarmMinutes.value)*60+valueTimeAlarmSeconds.value
+}
+onAlarmPercentageValueChanged: {
+    if(!switchAlarmType.checked)
+        alarmValue = alarmPercentageValue
+}
 
+onAlarmTimeValueChanged: {
+    if(switchAlarmType.checked)
+        alarmValue = alarmTimeValue
 }
 }
