@@ -170,6 +170,7 @@ RowLayout {
     function startPresentation() {
         cppPresentationTimer.presentationTime = parseInt(stopwatchHour.text)*60*60+parseInt(stopwatchMin.text)*60+parseInt(stopwatchSec.text)
         cppPresentationTimer.setThresholdAlarms(cppSettings.alarm1Value,cppSettings.alarm2Value)
+        cppPresentationTimer.setAlarmTypes(cppSettings.alarm1Type,cppSettings.alarm2Type)
         startCountdown()
     }
 

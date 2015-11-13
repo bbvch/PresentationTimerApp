@@ -2,7 +2,7 @@
 #include <QTimer>
 #include <QDebug>
 
-PresentationTimer::PresentationTimer(QObject *parent) : QObject(parent), mPresentationTime(0), mYellow(50), mRed(25)
+PresentationTimer::PresentationTimer(QObject *parent) : QObject(parent), mPresentationTime(0), mYellowValue(50), mRedValue(25), mYellowType(false), mRedType(false)
 {
     mTimer = new QTimer(parent);
     mTimer->setInterval(1000);
@@ -31,8 +31,15 @@ bool PresentationTimer::setThresholdAlarms(double yellow, double red)
 {
     if((yellow<red)||(red<0))
         return false;
-    mYellow=yellow;
-    mRed=red;
+    mYellowValue=yellow;
+    mRedValue=red;
+    return true;
+}
+
+bool PresentationTimer::setAlarmTypes(bool yellow, bool red)
+{
+    mYellowType=yellow;
+    mRedType=red;
     return true;
 }
 
@@ -40,10 +47,10 @@ bool PresentationTimer::startTimer()
 {
     if(mTime>=mPresentationTime)
         return false;
-if(!mTimer->isActive()) {
-    mTimer->start();
-    emit runningChanged();
-}
+    if(!mTimer->isActive()) {
+        mTimer->start();
+        emit runningChanged();
+    }
     return true;
 }
 
@@ -52,8 +59,8 @@ bool PresentationTimer::stopTimer()
     if(mTime>=mPresentationTime)
         return false;
     if(mTimer->isActive()) {
-    mTimer->stop();
-    emit runningChanged();
+        mTimer->stop();
+        emit runningChanged();
     }
     return true;
 }
@@ -80,12 +87,31 @@ int PresentationTimer::timerTick()
         mTimer->stop();
         emit runningChanged();
     }
-   // qDebug() << "Internal timer tick";
 
-    if(((1-1.0*mTime/mPresentationTime))<=(mRed/100.0))
-        emit alarmRed();
-    else     if((1-(1.0*mTime/mPresentationTime))<=(mYellow/100.0))
-        emit alarmYellow();
+
+    //if this is a time alarm
+    if(mRedType) {
+        if(getRemainingTime()<=mRedValue) {
+            emit alarmRed();
+            return mTime;
+        }
+    }
+    else
+    {
+        if(((1-1.0*mTime/mPresentationTime))<=(mRedValue/100.0)) {
+            emit alarmRed();
+            return mTime;
+        }
+    }
+
+    if(mYellowType) {
+        if(getRemainingTime()<=mYellowValue)
+            emit alarmYellow();
+    }
+    else {
+        if((1-(1.0*mTime/mPresentationTime))<=(mYellowValue/100.0))
+            emit alarmYellow();
+    }
 
     return mTime;
 

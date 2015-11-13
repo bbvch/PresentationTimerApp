@@ -35,11 +35,10 @@ id: sliderValueAlarm
 //width: 100
 width: 2.0*parent.width/3
 value: valueAlarm.value
+visible: !switchAlarmType.checked
 minimumValue: 0
-maximumValue: 100
+//maximumValue: 100
 anchors.top: labelValueAlarm.bottom
-//anchors.left: parent.left
-//anchors.right: valueAlarm.left
 onValueChanged: {
     if(valueAlarm.value != sliderValueAlarm.value)
         valueAlarm.value = sliderValueAlarm.value
@@ -50,18 +49,48 @@ SpinBox {
 id: valueAlarm
 anchors.top: labelValueAlarm.bottom
 anchors.left: sliderValueAlarm.right
+visible: !switchAlarmType.checked
 value: alarmValue
 width: parent.width/3
-decimals: 0
-//onValueChanged: sliderValueAlarm.value = valueAlarm
-//value: sliderValueAlarm.value*100
-//text: sliderValueAlarm.value
-//inputMethodHints: Qt.ImhPreferNumbers|Qt.ImhDigitsOnly
 onValueChanged:  {
     if(sliderValueAlarm.value != valueAlarm.value)
     sliderValueAlarm.value = valueAlarm.value
     alarmValue = valueAlarm.value
 }
+}
+SpinBox {
+id: valueTimeAlarmHours
+anchors.top: labelValueAlarm.bottom
+visible: switchAlarmType.checked
+value: Math.floor(alarmValue/3600)
+width: parent.width/3
+minimumValue: 0
+decimals: 0
+onValueChanged: updateTimeAlarmValue()
+}
+SpinBox {
+id: valueTimeAlarmMinutes
+maximumValue: 59
+minimumValue: 0
+anchors.top: labelValueAlarm.bottom
+anchors.left: valueTimeAlarmHours.right
+visible: switchAlarmType.checked
+value: Math.floor(alarmValue/60)%60
+width: parent.width/3
+decimals: 0
+onValueChanged: updateTimeAlarmValue()
+}
+SpinBox {
+id: valueTimeAlarmSeconds
+anchors.top: labelValueAlarm.bottom
+anchors.left: valueTimeAlarmMinutes.right
+visible: switchAlarmType.checked
+value: alarmValue%60
+maximumValue: 59
+minimumValue: 0
+width: parent.width/3
+decimals: 0
+onValueChanged: updateTimeAlarmValue()
 }
 
 Label {
@@ -105,6 +134,10 @@ ColorDialog {
         rectColorShowAlarm.color = color
         alarmColor = color
     }
+
+}
+function updateTimeAlarmValue() {
+    alarmValue = ((valueTimeAlarmHours.value*60)+valueTimeAlarmMinutes.value*60)+valueTimeAlarmSeconds.value
 
 }
 }

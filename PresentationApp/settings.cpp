@@ -37,7 +37,7 @@ void Settings::setAlarm2Color(QColor color)
 
 void Settings::setAlarm1Value(int value)
 {
-
+qDebug() << "Setting alarm value"+value;
     mSettings->setValue(ALARM1VALUE,value);
 }
 

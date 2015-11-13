@@ -56,7 +56,7 @@ void TestPresentationTimer::start_and_stop_a_timer_will_do_so()
     QCOMPARE(spyTick.count(),2);
 }
 
-void TestPresentationTimer::alarms_are_being_signaled()
+void TestPresentationTimer::percentage_alarms_are_being_signaled()
 {
     PresentationTimer* timer = new PresentationTimer(this);
     QCOMPARE(timer->setPresentationTime(4),true);
@@ -64,12 +64,43 @@ void TestPresentationTimer::alarms_are_being_signaled()
     QSignalSpy spyYellow(timer, SIGNAL(alarmYellow()));
     QSignalSpy spyRed(timer, SIGNAL(alarmRed()));
     QCOMPARE(timer->startTimer(),true);
-    QTest::qWait(2200);
+    QTest::qWait(1200);
+    //no Alarms should have been triggered
+    QCOMPARE(spyYellow.count(),0);
+    QCOMPARE(spyRed.count(),0);
+    //below 50% -> yellow
+    QTest::qWait(1200);
+    QCOMPARE(spyYellow.count(),1);
+    QCOMPARE(spyRed.count(),0);
+    spyYellow.clear();
+    spyRed.clear();
+    //below 25% -> red
+    QTest::qWait(1200);
+    QCOMPARE(spyYellow.count(),0);
+    QCOMPARE(spyRed.count(),1);
+}
+
+void TestPresentationTimer::time_alarms_are_being_signaled()
+{
+    PresentationTimer* timer = new PresentationTimer(this);
+    QCOMPARE(timer->setPresentationTime(4),true);
+    QCOMPARE(timer->setThresholdAlarms(2,1),true);
+    QCOMPARE(timer->setAlarmTypes(true,true),true);
+    QSignalSpy spyYellow(timer, SIGNAL(alarmYellow()));
+    QSignalSpy spyRed(timer, SIGNAL(alarmRed()));
+    QCOMPARE(timer->startTimer(),true);
+    QTest::qWait(1200);
+    //three seconds left -> no Alarms
+    QCOMPARE(spyYellow.count(),0);
+    QCOMPARE(spyRed.count(),0);
+    QTest::qWait(1200);
+    //two seconds left -> yellow
     QCOMPARE(spyYellow.count(),1);
     QCOMPARE(spyRed.count(),0);
     spyYellow.clear();
     spyRed.clear();
     QTest::qWait(1200);
+    //one second left -> red
     QCOMPARE(spyYellow.count(),0);
     QCOMPARE(spyRed.count(),1);
 }

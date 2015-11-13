@@ -33,6 +33,7 @@ public slots:
     /** Set time in seconds */
     bool setPresentationTime(int time);
     bool setThresholdAlarms(double yellow, double red);
+    bool setAlarmTypes(bool yellow, bool red);
     bool startTimer();
     bool stopTimer();
     /** change Running state, returns true if the Timer has now been started, false otherwise */
@@ -51,10 +52,12 @@ public:
 
 private:
     QTimer* mTimer;
-    int mPresentationTime;
-    int mTime;
-    double mYellow;
-    double mRed;
+    int mPresentationTime; /// the presentation time
+    int mTime; ///the already elapsed time
+    double mYellowValue; ///threshold/time at which to trigger yellow Alarm
+    double mRedValue;///threshold/time at which to trigger red Alarm
+    bool mYellowType; /// is a time threshold alarm? false=no, percentage, true=yes
+    bool mRedType;/// is a time threshold alarm? false=no, percentage, true=yes
 };
 
 #endif // PRESENTATIONTIMER_H
