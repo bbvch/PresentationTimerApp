@@ -220,16 +220,6 @@ RowLayout {
         }
     }
 
-    Connections {
-        target: cppSettings
-        onPresentationTimeChanged: {
-            stopwatchHour.text = Math.floor(cppSettings.presentationTime/3600.0)
-            stopwatchMin.text = Math.floor(cppSettings.presentationTime/60.0)%60
-            stopwatchSec.text = cppSettings.presentationTime%60
-            console.log("Qml pres time changed")
-        }
-    }
-
     function stopwatchValue(value) {
         stopwatchHour.text = Math.floor(value/3600.0)
         stopwatchMin.text = Math.floor(value/60.0)%60

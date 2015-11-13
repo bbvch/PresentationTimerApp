@@ -19,6 +19,7 @@ Rectangle {
     SpinBox {
         id: spinBoxDefaultHours
         anchors.top: labelDefaultTime.bottom
+        width: parent.width/6
         minimumValue: 0
         value: Math.floor(cppSettings.presentationTime/3600)
         onValueChanged: defaultPresentationTimeChanged()
@@ -33,6 +34,7 @@ Rectangle {
         id: spinBoxDefaultMinutes
         anchors.top: labelDefaultTime.bottom
         anchors.left: labelDefaultHours.right
+        width: parent.width/6
         maximumValue: 59
         minimumValue: 0
         value: Math.floor(cppSettings.presentationTime/60)%60
@@ -48,6 +50,7 @@ Rectangle {
         id: spinBoxDefaultSeconds
         anchors.top: labelDefaultTime.bottom
         anchors.left: labelDefaultMinutes.right
+        width: parent.width/6
         maximumValue: 59
         minimumValue: 0
         value: cppSettings.presentationTime%60
@@ -63,6 +66,7 @@ Rectangle {
     AlarmSettings {
         id: alarmSettings1
         anchors.top: labelDefaultSeconds.bottom
+        anchors.topMargin: 10
         alarmNr: 1
         alarmType: cppSettings.alarm1Type
         alarmColor: cppSettings.alarm1Color

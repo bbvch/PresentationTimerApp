@@ -32,11 +32,13 @@ anchors.top: switchAlarmType.bottom
 Slider {
 id: sliderValueAlarm
 //anchors.fill: width
-width: 100
+//width: 100
 value: valueAlarm.value
 minimumValue: 0
 maximumValue: 100
 anchors.top: labelValueAlarm.bottom
+anchors.left: parent.left
+anchors.right: valueAlarm.left
 onValueChanged: {
     if(valueAlarm.value != sliderValueAlarm.value)
         valueAlarm.value = sliderValueAlarm.value
