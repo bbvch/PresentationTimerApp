@@ -49,6 +49,17 @@ int main(int argc, char *argv[])
     Settings settings;
     engine.rootContext()->setContextProperty("cppPresentationTimer", &presentationTimer);
     engine.rootContext()->setContextProperty("cppSettings", &settings);
+//qDebug() << "Now color is: "+settings.getAlarm1Color();
+    if(settings.getAlarm1Color()==QColor(""))
+    {
+        settings.setAlarm1Color(QColor("yellow"));
+        settings.setAlarm1Type(false);
+        settings.setAlarm1Value(50);
+        settings.setAlarm2Color(QColor("red"));
+        settings.setAlarm2Type(false);
+        settings.setAlarm2Value(25);
+        settings.setPresentationTime(10);
+    }
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 

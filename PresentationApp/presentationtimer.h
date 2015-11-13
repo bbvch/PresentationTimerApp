@@ -22,7 +22,7 @@ signals:
     void alarmRed();
     /** Signals a timer tick (aka. one Second) */
 //    void tick();
-    /** Signals that */
+    /** Signals that the state of the presentation changed*/
     void runningChanged();
     /** Signals that the presentation time has changed */
     int presentationTimeChanged();

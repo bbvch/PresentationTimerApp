@@ -27,7 +27,7 @@ Rectangle {
     Label {
         id: labelDefaultHours
         text: qsTr("Hours")
-        anchors.top: labelDefaultTime.bottom
+        anchors.bottom: spinBoxDefaultHours.bottom
         anchors.left: spinBoxDefaultHours.right
     }
     SpinBox {
@@ -43,7 +43,7 @@ Rectangle {
     Label {
         id: labelDefaultMinutes
         text: qsTr("Minutes")
-        anchors.top: labelDefaultTime.bottom
+        anchors.bottom: spinBoxDefaultHours.bottom
         anchors.left: spinBoxDefaultMinutes.right
     }
     SpinBox {
@@ -59,7 +59,7 @@ Rectangle {
     Label {
         id: labelDefaultSeconds
         text: qsTr("Seconds")
-        anchors.top: labelDefaultTime.bottom
+        anchors.bottom: spinBoxDefaultHours.bottom
         anchors.left: spinBoxDefaultSeconds.right
     }
 
