@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.2
+import QtQml 2.2
 
 Item {
     id: rootView
@@ -110,12 +111,12 @@ ColumnLayout {
             target: cppPresentationTimer
             onAlarmYellow: {
                 // console.log("Timer tick")
-                rectangle.color = "yellow"
+                rectangle.color = cppSettings.alarm1Color
             }
             onAlarmRed: {
                 // console.log("Timer tick")
                 if(cppPresentationTimer.isRunning)
-                rectangle.color = "red"
+                rectangle.color = cppSettings.alarm2Color
             }
         }
     }
@@ -168,6 +169,7 @@ RowLayout {
 
     function startPresentation() {
         cppPresentationTimer.presentationTime = parseInt(stopwatchHour.text)*60*60+parseInt(stopwatchMin.text)*60+parseInt(stopwatchSec.text)
+        cppPresentationTimer.setThresholdAlarms(cppSettings.alarm1Value,cppSettings.alarm2Value)
         startCountdown()
     }
 
@@ -192,9 +194,7 @@ RowLayout {
         rectangle.color = "green"
         buttonStart.text = "Start"
         buttonReset.visible = false
-        stopwatchSec.text = cppPresentationTimer.presentationTime%60
-        stopwatchMin.text=Math.floor(cppPresentationTimer.presentationTime/60)%60
-        stopwatchHour.text=Math.floor(cppPresentationTimer.presentationTime/3600)
+        stopwatchValue(cppPresentationTimer.presentationTime)
         stopwatchHour.enabled = true
         stopwatchMin.enabled = true
         stopwatchSec.enabled = true
@@ -212,14 +212,28 @@ RowLayout {
             // console.log("Timer tick")
             //timeMin.text = Math.floor(cppPresentationTimer.remainingTime/60)
             //timeSeconds.text = cppPresentationTimer.remainingTime%60
-            stopwatchHour.text = Math.floor(cppPresentationTimer.remainingTime/3600.0)
-            stopwatchMin.text = Math.floor(cppPresentationTimer.remainingTime/60.0)%60
-            stopwatchSec.text = cppPresentationTimer.remainingTime%60
+            stopwatchValue(cppPresentationTimer.remainingTime)
         }
         onRunningChanged: {
             if((!cppPresentationTimer.isRunning)&&(cppPresentationTimer.remainingTime==0))
                 stopPresentation()
         }
+    }
+
+    Connections {
+        target: cppSettings
+        onPresentationTimeChanged: {
+            stopwatchHour.text = Math.floor(cppSettings.presentationTime/3600.0)
+            stopwatchMin.text = Math.floor(cppSettings.presentationTime/60.0)%60
+            stopwatchSec.text = cppSettings.presentationTime%60
+            console.log("Qml pres time changed")
+        }
+    }
+
+    function stopwatchValue(value) {
+        stopwatchHour.text = Math.floor(value/3600.0)
+        stopwatchMin.text = Math.floor(value/60.0)%60
+        stopwatchSec.text = value%60
     }
 
 

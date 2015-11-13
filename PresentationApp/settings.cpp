@@ -3,6 +3,8 @@
 #include <QColor>
 #include <QString>
 
+#include <QDebug>
+
 const QString ALARM1TYPE("ALARM1TYPE");
 const QString ALARM2TYPE("ALARM2TYPE");
 const QString ALARM1COLOR("ALARM1COLOR");
@@ -47,6 +49,7 @@ void Settings::setAlarm2Value(int value)
 void Settings::setPresentationTime(int time)
 {
     mSettings->setValue(PRESENTATIONTIME,time);
+    qDebug() << "Settings: presentation time changed";
 }
 
 

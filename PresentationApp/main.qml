@@ -26,7 +26,12 @@ Window {
         initialItem: RootView {
             id: rootView
         }
-        onCurrentItemChanged: {
+        onCurrentItemChanged:  {
+            if(stack.currentItem==rootView)
+                rootView.stopwatchValue(cppSettings.presentationTime)
+        }
+
+        /*onCurrentItemChanged: {
             if(stack.currentItem!=null)
                 if(stack.currentItem.state==="showingRoot")
                     toolbar_text.text = qsTr("PropertyCross")
@@ -36,17 +41,17 @@ Window {
                     toolbar_text.text = qsTr("Property Details")
                 else if(stack.currentItem.state==="showingResults")
                     toolbar_text.text = stack.searchResultsTitle
-
-        }
+        }*/
 
 
 
     //Keys.onMenuPressed:
     Keys.onReleased:
     {
-    if((event.key==Qt.Key_Menu)||(event.key==Qt.Key_1)) {
+    if(((event.key==Qt.Key_Menu)||(event.key==Qt.Key_1))&&(stack.currentItem==rootView)) {
         console.log("Menu pressed")
         stack.push("qrc:///MenuView.qml")
+        console.log(stack.currentItem)
     }
     //if(event.key==Qt.Key_1)
        // stack.push("qrc:///MenuView.qml")

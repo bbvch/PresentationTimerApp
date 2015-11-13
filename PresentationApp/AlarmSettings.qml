@@ -40,6 +40,7 @@ anchors.top: labelValueAlarm.bottom
 onValueChanged: {
     if(valueAlarm.value != sliderValueAlarm.value)
         valueAlarm.value = sliderValueAlarm.value
+    alarmValue = valueAlarm.value
 }
 }
 SpinBox {
@@ -55,17 +56,18 @@ decimals: 0
 onValueChanged:  {
     if(sliderValueAlarm.value != valueAlarm.value)
     sliderValueAlarm.value = valueAlarm.value
+    alarmValue = valueAlarm.value
 }
 }
 
 Label {
     id: labelColorAlarm
     anchors.top: valueAlarm.bottom
-    text: qsTr("Please choose a Value for the alarm"+alarmNr)
+    text: qsTr("Please choose a color for the alarm"+alarmNr)
 }
 
 Button {
-    text: qsTr("Pick the alarm color")
+    text: qsTr("Pick color")
     id: buttonColorPickAlarm
    // anchors.top:
     onClicked: {
@@ -78,8 +80,16 @@ Rectangle {
     color: alarmColor
     anchors.top: labelColorAlarm.bottom
     anchors.left: buttonColorPickAlarm.right
-    width: 20
-    height: 20
+    width: parent.width/4
+    height: buttonColorPickAlarm.height
+    anchors.leftMargin: 10
+    MouseArea {
+        width: parent.width
+        height: parent.height
+        onClicked: {
+            colorDialogAlarm.visible = true
+        }
+    }
 }
 
 ColorDialog {
@@ -87,6 +97,10 @@ ColorDialog {
     visible: false
     title: "Please choose a color"
     //Component.onCompleted: visible = true
+    onColorChanged: {
+        rectColorShowAlarm.color = color
+        alarmColor = color
+    }
 
 }
 }

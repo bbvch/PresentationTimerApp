@@ -7,6 +7,10 @@
 
 int main(int argc, char *argv[])
 {
+    QCoreApplication::setOrganizationName("bbv Software Solutions AG");
+    QCoreApplication::setOrganizationDomain("com.bbvSoftwareSolutions");
+    QCoreApplication::setApplicationName("PresentationTimerAppTest");
+
     //QCoreApplication needed for timers to work
     QCoreApplication app(argc, argv);
 

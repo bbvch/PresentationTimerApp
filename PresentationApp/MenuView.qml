@@ -20,7 +20,8 @@ Rectangle {
         id: spinBoxDefaultHours
         anchors.top: labelDefaultTime.bottom
         minimumValue: 0
-
+        value: Math.floor(cppSettings.presentationTime/3600)
+        onValueChanged: defaultPresentationTimeChanged()
     }
     Label {
         id: labelDefaultHours
@@ -34,6 +35,8 @@ Rectangle {
         anchors.left: labelDefaultHours.right
         maximumValue: 59
         minimumValue: 0
+        value: Math.floor(cppSettings.presentationTime/60)%60
+        onValueChanged: defaultPresentationTimeChanged()
     }
     Label {
         id: labelDefaultMinutes
@@ -47,6 +50,8 @@ Rectangle {
         anchors.left: labelDefaultMinutes.right
         maximumValue: 59
         minimumValue: 0
+        value: cppSettings.presentationTime%60
+        onValueChanged: defaultPresentationTimeChanged()
     }
     Label {
         id: labelDefaultSeconds
@@ -59,15 +64,24 @@ Rectangle {
         id: alarmSettings1
         anchors.top: labelDefaultSeconds.bottom
         alarmNr: 1
+        alarmType: cppSettings.alarm1Type
+        alarmColor: cppSettings.alarm1Color
+        alarmValue: cppSettings.alarm1Value
+        onAlarmTypeChanged: cppSettings.alarm1Type = alarmType
+        onAlarmColorChanged: cppSettings.alarm1Color = alarmColor
+        onAlarmValueChanged: cppSettings.alarm1Value = alarmValue
     }
 
     AlarmSettings {
         id: alarmSettings2
         anchors.top: alarmSettings1.bottom
         alarmNr: 2
-        alarmType: true
-        alarmColor: "yellow"
-        alarmValue: 25
+        alarmType: cppSettings.alarm2Type
+        alarmColor: cppSettings.alarm2Color
+        alarmValue: cppSettings.alarm2Value
+        onAlarmTypeChanged: cppSettings.alarm2Type = alarmType
+        onAlarmColorChanged: cppSettings.alarm2Color = alarmColor
+        onAlarmValueChanged: cppSettings.alarm2Value = alarmValue
     }
 Button {
     id: buttonBack
@@ -75,8 +89,12 @@ Button {
     onClicked: stack.pop()
     text: "Back"
     anchors.top: alarmSettings2.bottom
+    anchors.topMargin: 10
 }
 
+function defaultPresentationTimeChanged() {
+    cppSettings.presentationTime = ((spinBoxDefaultHours.value*60)+spinBoxDefaultMinutes.value*60)+spinBoxDefaultSeconds.value
+}
 
 
 
