@@ -22,12 +22,16 @@ DISTFILES += \
     android/build.gradle \
     android/gradle/wrapper/gradle-wrapper.properties \
     android/gradlew.bat \
-    AlarmSettings.qml
+    AlarmSettings.qml \
+    resources/btn_time.png \
+    resources/btn_percentage.png \
+    ToggleButtonAlarmType.qml
 
 contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
 QT += androidextras
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 }
+
 
 HEADERS += \
     presentationtimer.h \

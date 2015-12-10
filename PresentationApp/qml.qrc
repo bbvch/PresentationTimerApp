@@ -4,5 +4,8 @@
         <file>RootView.qml</file>
         <file>MenuView.qml</file>
         <file>AlarmSettings.qml</file>
+        <file>resources/btn_time.png</file>
+        <file>resources/btn_percentage.png</file>
+        <file>ToggleButtonAlarmType.qml</file>
     </qresource>
 </RCC>

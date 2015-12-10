@@ -19,18 +19,20 @@ Label {
 Label {
     id: labelAlarmType
     anchors.top: labelAlarm.bottom
-        text: qsTr("Please choose a type of alarm"+alarmNr)
+        text: qsTr("Please choose a type of alarm "+alarmNr)
 }
-Switch {
+ToggleButtonAlarmType {
 id: switchAlarmType
 anchors.top: labelAlarmType.bottom
 checked: alarmType
 onCheckedChanged: alarmType = checked
+//height: childrenRect.height
+//width: childrenRect.width
 }
 Label {
 id: labelValueAlarm
 anchors.top: switchAlarmType.bottom
-    text: qsTr("Please choose a value for alarm"+alarmNr)
+    text: qsTr("Please choose a %1-value for alarm %2").arg(switchAlarmType.checked ? "time" : "percentage").arg(alarmNr)
 }
 Slider {
 id: sliderValueAlarm

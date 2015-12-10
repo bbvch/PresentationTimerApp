@@ -29,8 +29,23 @@ bool PresentationTimer::setPresentationTime(int time)
 
 bool PresentationTimer::setThresholdAlarms(double yellow, double red)
 {
+    //Yellow  should not be smaller than red, so do some tests on that
+    /*if(mYellowType==mRedType) {
     if((yellow<red)||(red<0))
         return false;
+    }
+    else {
+        //if the yellow alarm is time based, calculate the percentage first
+        if(mYellowType==true){
+            if((yellow/mPresentationTime*100.0)<red)
+                return false;
+        }
+        else {
+            if(yellow<(red/mPresentationTime*100.0))
+                return false;
+        }
+
+    }*/
     mYellowValue=yellow;
     mRedValue=red;
     return true;

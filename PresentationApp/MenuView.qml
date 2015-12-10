@@ -10,10 +10,17 @@ Rectangle {
         id: labelSettings
         text: qsTr("Change the settings of the app")
     }
+    Label {
+        anchors.top: labelSettings.bottom
+        id: labelWarning
+        color: "red"
+        text: "Test"
+        visible: false
+    }
 
     Label {
         id: labelDefaultTime
-        anchors.top: labelSettings.bottom
+        anchors.top: labelWarning.bottom
         text: qsTr("Default presentation time")
     }
     SpinBox {
