@@ -9,12 +9,15 @@ Item {
     anchors.margins: 10
     //we are detecting states: stopped, running, paused
     state: "stopped"
-    onStateChanged: console.log("New State:"+state)
+
     /*Rectangle {
         id: spacingRectangle
         anchors.top: parent.top
         anchors.bottom: rootView.verticalCenter
     }*/
+
+    onStateChanged: console.log("New State:"+state)
+
     Item {
         id: timeInputs
        // anchors.centerIn: rootView
@@ -25,81 +28,87 @@ Item {
         width: childrenRect.width
         anchors.centerIn: parent
 
-ColumnLayout {
-    id: inputHours
-    anchors.top: parent.verticalCenter
-    z:1
-    Label {
-        id: labelHour
-        text: qsTr("Hours")
-       // anchors.top: parent.top
-       // anchors.left: parent.left
-    }
+        ColumnLayout {
+            id: inputHours
+            anchors.top: parent.verticalCenter
+            z:1
+            Label {
+                id: labelHour
+                text: qsTr("Hours")
+               // anchors.top: parent.top
+               // anchors.left: parent.left
+            }
 
-    TextInput {
-        id: stopwatchHour
-        text: "00"
-        maximumLength: 2
-        horizontalAlignment: Text.Center
-        anchors.left: parent.left
-        anchors.right: parent.right
-        inputMethodHints:Qt.ImhDigitsOnly
-        KeyNavigation.tab: stopwatchMin
-    }
-    }
-ColumnLayout {
-    id: inputMinutes
-            anchors.leftMargin: 20
-    anchors.left: inputHours.right
-    anchors.top: inputHours.top
-    z:1
-    Label {
-        id: labelMin
-        text: qsTr("Minutes")
-}
-    TextInput {
-        id: stopwatchMin
-        text: "00"
-        horizontalAlignment: Text.Center
-        maximumLength: 2
-        anchors.left: parent.left
-        anchors.right: parent.right
-        inputMethodHints:Qt.ImhDigitsOnly
-        KeyNavigation.tab: stopwatchSec
-    }
-    }
-ColumnLayout {
-    id: inputSeconds
-            anchors.leftMargin: 20
-    anchors.left: inputMinutes.right
-    anchors.top: inputMinutes.top
-    z:1
-    Label {
-        id: labelSec
-        text: qsTr("Seconds")
-}
-    TextInput {
-        id: stopwatchSec
-        text: "00"
-        horizontalAlignment: Text.Center
-        inputMethodHints:Qt.ImhDigitsOnly
-        maximumLength: 2
-        anchors.left: parent.left
-        anchors.right: parent.right
-        KeyNavigation.tab: buttonStart
-    }
-    }
+            TextInput {
+                id: stopwatchHour
+                text: "00"
+                maximumLength: 2
+                horizontalAlignment: Text.Center
+                anchors.left:      parent.left
+                anchors.right:     parent.right
+                inputMethodHints:  Qt.ImhDigitsOnly
+                KeyNavigation.tab: stopwatchMin
+            }
+        }
 
-}
+        ColumnLayout {
+            id: inputMinutes
+            anchors.leftMargin: 20
+            anchors.left: inputHours.right
+            anchors.top: inputHours.top
+            z:1
+
+            Label {
+                id: labelMin
+                text: qsTr("Minutes")
+            }
+
+            TextInput {
+                id: stopwatchMin
+                text: "00"
+                horizontalAlignment: Text.Center
+                maximumLength: 2
+                anchors.left:      parent.left
+                anchors.right:     parent.right
+                inputMethodHints:  Qt.ImhDigitsOnly
+                KeyNavigation.tab: stopwatchSec
+            }
+        }
+
+        ColumnLayout {
+            id: inputSeconds
+            anchors.leftMargin: 20
+            anchors.left: inputMinutes.right
+            anchors.top:  inputMinutes.top
+            z:1
+
+            Label {
+                id: labelSec
+                text: qsTr("Seconds")
+            }
+
+            TextInput {
+                id: stopwatchSec
+                text: "00"
+                horizontalAlignment: Text.Center
+                inputMethodHints:    Qt.ImhDigitsOnly
+                maximumLength: 2
+                anchors.left:       parent.left
+                anchors.right:      parent.right
+                KeyNavigation.tab:  buttonStart
+            }
+        } // ColumnLayout
+    } // Item
+
     Rectangle {
-        color: "green"
         id: rectangle
         //anchors.fill: width
-        anchors.top: parent.top
+        anchors.top:    parent.top
         anchors.bottom: layoutButtons.top
-        anchors.left: parent.left
-        anchors.right: parent.right
+        anchors.left:   parent.left
+        anchors.right:  parent.right
         anchors.bottomMargin: 10
+        color: "green"
 
         //anchors.centerIn: parent
         radius: 5//*dpi
@@ -109,6 +118,7 @@ ColumnLayout {
         //anchors.
         Connections {
             target: cppPresentationTimer
+
             onAlarmYellow: {
                 // console.log("Timer tick")
                 rectangle.color = cppSettings.alarm1Color
@@ -118,95 +128,52 @@ ColumnLayout {
                 if(cppPresentationTimer.isRunning)
                 rectangle.color = cppSettings.alarm2Color
             }
-        }
-    }
-RowLayout {
-    id: layoutButtons
-    anchors.bottom: parent.bottom
-    anchors.left: parent.left
-    anchors.right: parent.right
-    Button {
-        text: "start"
-        id: buttonStart
-        Layout.fillWidth: true
-        KeyNavigation.tab: stopwatchHour
+        } // Connections
+    } // Rectangle
 
-        //anchors.right: buttonReset.visible ? buttonReset.left : parent.right
+    RowLayout {
+        id: layoutButtons
+        anchors.bottom: parent.bottom
+        anchors.left:   parent.left
+        anchors.right:  parent.right
 
+        Button {
+            text: "start"
+            id: buttonStart
+            Layout.fillWidth: true
+            KeyNavigation.tab: stopwatchHour
+            //anchors.right: buttonReset.visible ? buttonReset.left : parent.right
+            //  anchors.fill: width
 
-      //  anchors.fill: width
-        onClicked: {
-            if(rootView.state=="stopped"){
-                startPresentation()
+            onClicked: {
+                if(rootView.state=="stopped"){
+                    startPresentation()
+                }
+                else {
+                    if(rootView.state=="paused")
+                        startCountdown()
+                    else
+                    pausePresentation()
+                }
+            } // onClicked
+        } // Button
+
+        Button {
+            text: "Reset"
+            visible: false
+            id: buttonReset
+            Layout.fillWidth: true
+            //anchors.leftMargin: 10
+           // anchors.bottom: parent.bottom
+            //anchors.right: parent.right
+           // anchors.left: buttonStart.right
+
+            onClicked: {
+                    stopPresentation()
             }
-            else
-            {
-                if(rootView.state=="paused")
-                    startCountdown()
-                else
-                pausePresentation()
-            }
-        }
-    }
+        } // Button
+    } // RowLayout
 
-    Button {
-        text: "Reset"
-        visible: false
-        id: buttonReset
-        Layout.fillWidth: true
-        //anchors.leftMargin: 10
-       // anchors.bottom: parent.bottom
-        //anchors.right: parent.right
-       // anchors.left: buttonStart.right
-        onClicked: {
-                stopPresentation()
-
-        }
-    }
-}
-
-
-
-    function startPresentation() {
-        cppPresentationTimer.presentationTime = parseInt(stopwatchHour.text)*60*60+parseInt(stopwatchMin.text)*60+parseInt(stopwatchSec.text)
-        cppPresentationTimer.setThresholdAlarms(cppSettings.alarm1Value,cppSettings.alarm2Value)
-        cppPresentationTimer.setAlarmTypes(cppSettings.alarm1Type,cppSettings.alarm2Type)
-        startCountdown()
-    }
-
-    function startCountdown() {
-        if(cppPresentationTimer.startTimer()) {
-        buttonStart.text = "Pause"
-            buttonReset.visible = true
-            Qt.inputMethod.hide();
-            stopwatchHour.focus = false
-            stopwatchHour.enabled = false
-            stopwatchMin.focus = false
-            stopwatchMin.enabled = false
-            stopwatchSec.focus = false
-            stopwatchSec.enabled = false
-            rootView.state = "running"
-        }
-    }
-
-    function stopPresentation() {
-
-        cppPresentationTimer.stopTimer()
-        rectangle.color = "green"
-        buttonStart.text = "Start"
-        buttonReset.visible = false
-        stopwatchValue(cppPresentationTimer.presentationTime)
-        stopwatchHour.enabled = true
-        stopwatchMin.enabled = true
-        stopwatchSec.enabled = true
-        rootView.state = "stopped"
-    }
-    function pausePresentation() {
-
-        cppPresentationTimer.stopTimer()
-        buttonStart.text = "Resume"
-        rootView.state = "paused"
-    }
     Connections {
         target: cppPresentationTimer
         onPresentationTimerTick: {
@@ -221,11 +188,49 @@ RowLayout {
         }
     }
 
-    function stopwatchValue(value) {
-        stopwatchHour.text = Math.floor(value/3600.0)
-        stopwatchMin.text = Math.floor(value/60.0)%60
-        stopwatchSec.text = value%60
+    function startPresentation() {
+        cppPresentationTimer.presentationTime = parseInt(stopwatchHour.text)*60*60+parseInt(stopwatchMin.text)*60+parseInt(stopwatchSec.text)
+        cppPresentationTimer.setThresholdAlarms(cppSettings.alarm1Value,cppSettings.alarm2Value)
+        cppPresentationTimer.setAlarmTypes(cppSettings.alarm1Type,cppSettings.alarm2Type)
+        startCountdown()
     }
 
+    function startCountdown() {
+        if(cppPresentationTimer.startTimer()) {
+            buttonStart.text      = "Pause"
+            buttonReset.visible   = true
+            Qt.inputMethod.hide();
+            stopwatchHour.focus   = false
+            stopwatchHour.enabled = false
+            stopwatchMin.focus    = false
+            stopwatchMin.enabled  = false
+            stopwatchSec.focus    = false
+            stopwatchSec.enabled  = false
+            rootView.state        = "running"
+        }
+    }
 
+    function stopPresentation() {
+        cppPresentationTimer.stopTimer()
+        rectangle.color       = "green"
+        buttonStart.text      = "Start"
+        buttonReset.visible   = false
+        stopwatchValue(cppPresentationTimer.presentationTime)
+        stopwatchHour.enabled = true
+        stopwatchMin.enabled  = true
+        stopwatchSec.enabled  = true
+        rootView.state        = "stopped"
+    }
+
+    function pausePresentation() {
+        cppPresentationTimer.stopTimer()
+        buttonStart.text = "Resume"
+        rootView.state   = "paused"
+    }
+
+    function stopwatchValue(value) {
+        stopwatchHour.text = Math.floor(value/3600.0)
+        stopwatchMin.text  = Math.floor(value/60.0)%60
+        stopwatchSec.text  = value%60
+    }
 }

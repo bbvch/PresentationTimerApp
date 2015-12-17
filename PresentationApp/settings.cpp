@@ -1,9 +1,9 @@
-#include "settings.h"
-
 #include <QColor>
+#include <QDebug>
+#include <QSettings>
 #include <QString>
 
-#include <QDebug>
+#include "settings.h"
 
 const QString ALARM1TYPE("ALARM1TYPE");
 const QString ALARM2TYPE("ALARM2TYPE");
@@ -15,40 +15,35 @@ const QString ALARM1THRESHOLD("ALARM1THRESHOLD");
 const QString ALARM2THRESHOLD("ALARM2THRESHOLD");
 const QString PRESENTATIONTIME("PRESENTATIONTIME");
 
-Settings::Settings(QObject *parent) : QObject(parent)
-{
-    mSettings = new QSettings();
-}
-
-Settings::~Settings()
-{
-    delete mSettings;
-}
+Settings::Settings(QObject *parent)
+    : QObject(parent),
+      mSettings(new QSettings)
+{ }
 
 void Settings::setAlarm1Color(QColor color)
 {
-    mSettings->setValue(ALARM1COLOR,color);
+    mSettings->setValue(ALARM1COLOR, color);
 }
 
 void Settings::setAlarm2Color(QColor color)
 {
-    mSettings->setValue(ALARM2COLOR,color);
+    mSettings->setValue(ALARM2COLOR, color);
 }
 
 void Settings::setAlarm1Value(int value)
 {
-qDebug() << "Setting alarm value"+value;
-    mSettings->setValue(ALARM1VALUE,value);
+    qDebug() << "Setting alarm value" + value;
+    mSettings->setValue(ALARM1VALUE, value);
 }
 
 void Settings::setAlarm2Value(int value)
 {
-    mSettings->setValue(ALARM2VALUE,value);
+    mSettings->setValue(ALARM2VALUE, value);
 }
 
 void Settings::setPresentationTime(int time)
 {
-    mSettings->setValue(PRESENTATIONTIME,time);
+    mSettings->setValue(PRESENTATIONTIME, time);
     qDebug() << "Settings: presentation time changed";
 }
 
@@ -92,7 +87,7 @@ bool Settings::setAlarmColors(QColor alarm1, QColor alarm2)
 */
 bool Settings::getAlarm1Type()
 {
-return mSettings->value(ALARM1TYPE).toBool();
+    return mSettings->value(ALARM1TYPE).toBool();
 }
 
 void Settings::setAlarm1Type(bool type)
@@ -112,6 +107,6 @@ void Settings::setAlarm2Type(bool type)
 
 int Settings::getPresentationTime()
 {
-return mSettings->value(PRESENTATIONTIME).toInt();
+    return mSettings->value(PRESENTATIONTIME).toInt();
 }
 

@@ -2,7 +2,8 @@
 #define PRESENTATIONTIMER_H
 
 #include <QObject>
-#include <QTimer>
+
+class QTimer;
 
 class PresentationTimer : public QObject
 {
@@ -11,9 +12,9 @@ class PresentationTimer : public QObject
     Q_PROPERTY(int presentationTime READ getPresentationTime WRITE setPresentationTime NOTIFY presentationTimeChanged)
     Q_PROPERTY(int time READ getTime NOTIFY presentationTimerTick)
     Q_PROPERTY(int remainingTime READ getRemainingTime() NOTIFY presentationTimerTick)
+
 public:
     explicit PresentationTimer(QObject *parent = 0);
-    ~PresentationTimer();
 
 signals:
     /** Signals a Yellow Alarm */
@@ -32,8 +33,8 @@ signals:
 public slots:
     /** Set time in seconds */
     bool setPresentationTime(int time);
-    bool setThresholdAlarms(double yellow, double red);
-    bool setAlarmTypes(bool yellow, bool red);
+    bool setThresholdAlarms(double yellowTime, double red);
+    bool setAlarmTypes(bool yellowType, bool redType);
     bool startTimer();
     bool stopTimer();
     /** change Running state, returns true if the Timer has now been started, false otherwise */
@@ -52,12 +53,12 @@ public:
 
 private:
     QTimer* mTimer;
-    int mPresentationTime; /// the presentation time
-    int mTime; ///the already elapsed time
-    double mYellowValue; ///threshold/time at which to trigger yellow Alarm
-    double mRedValue;///threshold/time at which to trigger red Alarm
-    bool mYellowType; /// is a time threshold alarm? false=no, percentage, true=yes
-    bool mRedType;/// is a time threshold alarm? false=no, percentage, true=yes
+    int     mPresentationTime;  /// the presentation time
+    int     mElapsedTime;       /// the already elapsed time
+    double  mYellowTimeValue;   /// threshold/time at which to trigger yellow Alarm
+    double  mRedTimeValue;      /// threshold/time at which to trigger red Alarm
+    bool    mYellowType;        /// is a time threshold alarm? false=no, percentage, true=yes
+    bool    mRedType;           /// is a time threshold alarm? false=no, percentage, true=yes
 };
 
 #endif // PRESENTATIONTIMER_H

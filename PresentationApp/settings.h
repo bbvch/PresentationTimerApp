@@ -3,7 +3,8 @@
 
 #include <QColor>
 #include <QObject>
-#include <QSettings>
+
+class QSettings;
 
 class Settings : public QObject
 {
@@ -18,7 +19,6 @@ class Settings : public QObject
 
 public:
     explicit Settings(QObject *parent = 0);
-    ~Settings();
 
 signals:
     void alarm1TypeChanged(bool type);
@@ -41,13 +41,13 @@ public slots:
     void setAlarm2Value(int value);
     void setPresentationTime(int time);
 public:
-    bool getAlarm1Type();
-    bool getAlarm2Type();
-    QColor getAlarm1Color();
-    QColor getAlarm2Color();
-    int getAlarm1Value();
-    int getAlarm2Value();
-    int getPresentationTime();
+    bool    getAlarm1Type();
+    bool    getAlarm2Type();
+    QColor  getAlarm1Color();
+    QColor  getAlarm2Color();
+    int     getAlarm1Value();
+    int     getAlarm2Value();
+    int     getPresentationTime();
 
 private:
     QSettings* mSettings;

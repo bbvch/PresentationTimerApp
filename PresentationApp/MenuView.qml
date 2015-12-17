@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.2
 import QtQuick.Dialogs 1.2
 
 Rectangle {
-    id: "settingsView"
+    id: settingsView
     //anchors.fill: parent
     Label {
         id: labelSettings
@@ -16,51 +16,59 @@ Rectangle {
         anchors.top: labelSettings.bottom
         text: qsTr("Default presentation time")
     }
+
     SpinBox {
         id: spinBoxDefaultHours
-        anchors.top: labelDefaultTime.bottom
-        width: parent.width/6
-        minimumValue: 0
-        value: Math.floor(cppSettings.presentationTime/3600)
+        anchors.top:    labelDefaultTime.bottom
+        width:          parent.width/6
+        minimumValue:   0
+        value:          Math.floor(cppSettings.presentationTime/3600)
         onValueChanged: defaultPresentationTimeChanged()
     }
+
     Label {
         id: labelDefaultHours
         text: qsTr("Hours")
         anchors.bottom: spinBoxDefaultHours.bottom
         anchors.left: spinBoxDefaultHours.right
     }
+
     SpinBox {
         id: spinBoxDefaultMinutes
-        anchors.top: labelDefaultTime.bottom
+        anchors.top:  labelDefaultTime.bottom
         anchors.left: labelDefaultHours.right
-        width: parent.width/6
+        width:        parent.width/6
         maximumValue: 59
         minimumValue: 0
-        value: Math.floor(cppSettings.presentationTime/60)%60
+        value:        Math.floor(cppSettings.presentationTime/60)%60
+
         onValueChanged: defaultPresentationTimeChanged()
     }
+
     Label {
         id: labelDefaultMinutes
         text: qsTr("Minutes")
         anchors.bottom: spinBoxDefaultHours.bottom
-        anchors.left: spinBoxDefaultMinutes.right
+        anchors.left:   spinBoxDefaultMinutes.right
     }
+
     SpinBox {
         id: spinBoxDefaultSeconds
-        anchors.top: labelDefaultTime.bottom
+        anchors.top:  labelDefaultTime.bottom
         anchors.left: labelDefaultMinutes.right
-        width: parent.width/6
+        width:        parent.width/6
         maximumValue: 59
         minimumValue: 0
-        value: cppSettings.presentationTime%60
+        value:          cppSettings.presentationTime%60
+
         onValueChanged: defaultPresentationTimeChanged()
     }
+
     Label {
         id: labelDefaultSeconds
         text: qsTr("Seconds")
         anchors.bottom: spinBoxDefaultHours.bottom
-        anchors.left: spinBoxDefaultSeconds.right
+        anchors.left:   spinBoxDefaultSeconds.right
     }
 
     AlarmSettings {
@@ -68,10 +76,11 @@ Rectangle {
         anchors.top: labelDefaultSeconds.bottom
         anchors.topMargin: 10
         alarmNr: 1
-        alarmType: cppSettings.alarm1Type
-        alarmColor: cppSettings.alarm1Color
-        alarmValue: cppSettings.alarm1Value
-        onAlarmTypeChanged: cppSettings.alarm1Type = alarmType
+        alarmType:           cppSettings.alarm1Type
+        alarmColor:          cppSettings.alarm1Color
+        alarmValue:          cppSettings.alarm1Value
+
+        onAlarmTypeChanged:  cppSettings.alarm1Type = alarmType
         onAlarmColorChanged: cppSettings.alarm1Color = alarmColor
         onAlarmValueChanged: cppSettings.alarm1Value = alarmValue
     }
@@ -80,24 +89,26 @@ Rectangle {
         id: alarmSettings2
         anchors.top: alarmSettings1.bottom
         alarmNr: 2
-        alarmType: cppSettings.alarm2Type
-        alarmColor: cppSettings.alarm2Color
-        alarmValue: cppSettings.alarm2Value
-        onAlarmTypeChanged: cppSettings.alarm2Type = alarmType
+        alarmType:           cppSettings.alarm2Type
+        alarmColor:          cppSettings.alarm2Color
+        alarmValue:          cppSettings.alarm2Value
+
+        onAlarmTypeChanged:  cppSettings.alarm2Type = alarmType
         onAlarmColorChanged: cppSettings.alarm2Color = alarmColor
         onAlarmValueChanged: {
             console.log("Alarm value changed"+alarmValue)
             cppSettings.alarm2Value = alarmValue
         }
     }
-Button {
-    id: buttonBack
-    //onClicked:
-    onClicked: stack.pop()
-    text: "Back"
-    anchors.top: alarmSettings2.bottom
-    anchors.topMargin: 10
-}
+
+    Button {
+        id: buttonBack
+        text: "Back"
+        anchors.top: alarmSettings2.bottom
+        anchors.topMargin: 10
+
+        onClicked: stack.pop()
+    }
 
 function defaultPresentationTimeChanged() {
     cppSettings.presentationTime = ((spinBoxDefaultHours.value*60)+spinBoxDefaultMinutes.value*60)+spinBoxDefaultSeconds.value

@@ -5,31 +5,33 @@ import QtQuick.Layouts 1.2
 
 
 Window {
-    visible: true
     id: mainWindow
     property int currentTime
     property int presentationTime
     property int dpi: Screen.pixelDensity*25.4
-    width: 400
+    visible: true
+    width:  400
     height: 400
+
     StackView {
-        id:stack
+        id: stack
+        property string searchResultsTitle
         anchors.fill: parent
         width: parent.width
         focus: true
-        property string searchResultsTitle
+
         Keys.onReleased: {
             if ((event.key === Qt.Key_F2 || event.key === Qt.Key_Back) && stack.depth > 1) {
                              event.accepted = true;
                              stack.pop()
-                         }
+            }
+
             if(((event.key===Qt.Key_Menu)||(event.key===Qt.Key_F1))&&(stack.currentItem==rootView)) {
                 console.log("Menu pressed")
                 stack.push("qrc:///MenuView.qml")
                 console.log(stack.currentItem)
             }
         }
-
 
         initialItem: RootView {
             id: rootView
@@ -51,5 +53,5 @@ Window {
                     toolbar_text.text = stack.searchResultsTitle
         }*/
 
-    }
-}
+    } // StackView
+} // Window
