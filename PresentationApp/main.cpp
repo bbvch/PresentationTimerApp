@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
     }
 
     //Load the initial qml file
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
 
     //Start the app!
     return app.exec();

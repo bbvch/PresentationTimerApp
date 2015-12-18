@@ -2,12 +2,6 @@ TEMPLATE = app
 
 QT += qml quick
 
-SOURCES += main.cpp \
-    presentationtimer.cpp \
-    settings.cpp
-
-RESOURCES += qml.qrc
-
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
 
@@ -22,14 +16,20 @@ DISTFILES += \
     android/build.gradle \
     android/gradle/wrapper/gradle-wrapper.properties \
     android/gradlew.bat \
-    AlarmSettings.qml \
-    LabelTextInput.qml
+	qml/AlarmSettings.qml \
+	qml/LabelTextInput.qml
 
 contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
 QT += androidextras
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 }
 
+RESOURCES += qml.qrc
+
 HEADERS += \
     presentationtimer.h \
     settings.h
+
+SOURCES += main.cpp \
+	presentationtimer.cpp \
+	settings.cpp

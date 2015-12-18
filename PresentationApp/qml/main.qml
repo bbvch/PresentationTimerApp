@@ -28,7 +28,7 @@ Window {
             if(((event.key===Qt.Key_Menu)||(event.key===Qt.Key_F1))&&(stack.currentItem==rootView)) {
                 console.log("Menu pressed")
                 rootView.pausePresentation()
-                stack.push("qrc:///MenuView.qml")
+                stack.push("qrc:///qml/MenuView.qml")
                 console.log(stack.currentItem)
             }
         }
