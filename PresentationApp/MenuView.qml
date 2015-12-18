@@ -5,7 +5,9 @@ import QtQuick.Dialogs 1.2
 
 Rectangle {
     id: settingsView
-    //anchors.fill: parent
+//    anchors.fill: parent
+    anchors.margins: 10
+
     Label {
         id: labelSettings
         text: qsTr("Change the settings of the app")
@@ -23,6 +25,7 @@ Rectangle {
         width:          parent.width/6
         minimumValue:   0
         value:          Math.floor(cppSettings.presentationTime/3600)
+
         onValueChanged: defaultPresentationTimeChanged()
     }
 
@@ -72,49 +75,46 @@ Rectangle {
     }
 
     AlarmSettings {
-        id: alarmSettings1
+        id: firstAlarmSettings
         anchors.top: labelDefaultSeconds.bottom
         anchors.topMargin: 10
         alarmNr: 1
         alarmType:           cppSettings.alarm1Type
-        alarmColor:          cppSettings.alarm1Color
-        alarmValue:          cppSettings.alarm1Value
+        alarmColor:          cppSettings.firstAlarmColor
+        alarmValue:          cppSettings.firstAlarmValue
 
-        onAlarmTypeChanged:  cppSettings.alarm1Type = alarmType
-        onAlarmColorChanged: cppSettings.alarm1Color = alarmColor
-        onAlarmValueChanged: cppSettings.alarm1Value = alarmValue
+        onAlarmTypeChanged:  cppSettings.alarm1Type      = alarmType
+        onAlarmColorChanged: cppSettings.firstAlarmColor = alarmColor
+        onAlarmValueChanged: cppSettings.firstAlarmValue = alarmValue
     }
 
     AlarmSettings {
-        id: alarmSettings2
-        anchors.top: alarmSettings1.bottom
+        id: secondAlarmSettings
+        anchors.top: firstAlarmSettings.bottom
         alarmNr: 2
         alarmType:           cppSettings.alarm2Type
-        alarmColor:          cppSettings.alarm2Color
-        alarmValue:          cppSettings.alarm2Value
+        alarmColor:          cppSettings.secondAlarmColor
+        alarmValue:          cppSettings.secondAlarmValue
 
-        onAlarmTypeChanged:  cppSettings.alarm2Type = alarmType
-        onAlarmColorChanged: cppSettings.alarm2Color = alarmColor
+        onAlarmTypeChanged:  cppSettings.alarm2Type       = alarmType
+        onAlarmColorChanged: cppSettings.secondAlarmColor = alarmColor
         onAlarmValueChanged: {
             console.log("Alarm value changed"+alarmValue)
-            cppSettings.alarm2Value = alarmValue
+            cppSettings.secondAlarmValue = alarmValue
         }
     }
 
     Button {
         id: buttonBack
         text: "Back"
-        anchors.top: alarmSettings2.bottom
+        anchors.top: secondAlarmSettings.bottom
         anchors.topMargin: 10
 
         onClicked: stack.pop()
     }
 
-function defaultPresentationTimeChanged() {
-    cppSettings.presentationTime = ((spinBoxDefaultHours.value*60)+spinBoxDefaultMinutes.value*60)+spinBoxDefaultSeconds.value
-}
-
-
-
+    function defaultPresentationTimeChanged() {
+        cppSettings.presentationTime = ((spinBoxDefaultHours.value*60)+spinBoxDefaultMinutes.value*60)+spinBoxDefaultSeconds.value
+    }
 }
 

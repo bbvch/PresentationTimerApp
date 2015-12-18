@@ -13,11 +13,8 @@ class TestPresentationTimer : public QObject
 public:
     explicit TestPresentationTimer(QObject *parent = 0);
 
-signals:
-
-public slots:
-
 private slots:
+    //! Test if we can create and configure a timer
     void can_successfully_create_and_configure_Timer();
     void start_and_stop_a_timer_will_do_so();
     void percentage_alarms_are_being_signaled();

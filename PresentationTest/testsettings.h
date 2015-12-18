@@ -9,9 +9,8 @@ class TestSettings : public QObject
 public:
     explicit TestSettings(QObject *parent = 0);
 
-signals:
-
 private slots:
+    //! Test if we can set and read variables from the persistent settings
     void can_set_and_read_variables();
 };
 

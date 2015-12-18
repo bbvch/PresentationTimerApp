@@ -6,6 +6,11 @@ TestPresentationTimer::TestPresentationTimer(QObject *parent) : QObject(parent)
 
 }
 
+/* HINT: use QSignalSpy to check if the signals are generated correctly,
+ * e.g. QSignalSpy mySpy(object, SIGNAL(mySignal))
+ *
+ * HINT: Use QTest::qWait to time things
+ */
 void TestPresentationTimer::can_successfully_create_and_configure_Timer()
 {
     PresentationTimer* timer = new PresentationTimer(this);
@@ -105,7 +110,3 @@ void TestPresentationTimer::time_alarms_are_being_signaled()
     QCOMPARE(spyRed.count(),1);
 }
 
-//QTEST_MAIN(TestPresentationTimer)
-//#include "testpresentationtimer.moc"
-
-//#include "moc_testpresentationtimer.o"

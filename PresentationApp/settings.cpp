@@ -20,23 +20,23 @@ Settings::Settings(QObject *parent)
       mSettings(new QSettings)
 { }
 
-void Settings::setAlarm1Color(QColor color)
+void Settings::setFirstAlarmColor(QColor color)
 {
     mSettings->setValue(ALARM1COLOR, color);
 }
 
-void Settings::setAlarm2Color(QColor color)
+void Settings::setSecondAlarmColor(QColor color)
 {
     mSettings->setValue(ALARM2COLOR, color);
 }
 
-void Settings::setAlarm1Value(int value)
+void Settings::setFirstAlarmValue(int value)
 {
     qDebug() << "Setting alarm value" + value;
     mSettings->setValue(ALARM1VALUE, value);
 }
 
-void Settings::setAlarm2Value(int value)
+void Settings::setSecondAlarmValue(int value)
 {
     mSettings->setValue(ALARM2VALUE, value);
 }
@@ -48,43 +48,26 @@ void Settings::setPresentationTime(int time)
 }
 
 
-QColor Settings::getAlarm1Color()
+QColor Settings::getFirstAlarmColor()
 {
     return mSettings->value(ALARM1COLOR).value<QColor>();
 }
 
-QColor Settings::getAlarm2Color()
+QColor Settings::getSecondAlarmColor()
 {
     return mSettings->value(ALARM2COLOR).value<QColor>();
 }
 
-int Settings::getAlarm1Value()
+int Settings::getFirstAlarmValue()
 {
     return mSettings->value(ALARM1VALUE).toInt();
 }
 
-int Settings::getAlarm2Value()
+int Settings::getSecondAlarmValue()
 {
     return mSettings->value(ALARM2VALUE).toInt();
 }
 
-/*bool Settings::setThresholdAlarms(double alarm1, double alarm2)
-{
-return true;
-}
-
-bool Settings::setAlarmTypes(bool alarm1, bool alarm2)
-{
-mSettings->setValue(ALARM1TYPE,alarm1);
-mSettings->setValue(ALARM2TYPE,alarm2);
-}
-
-bool Settings::setAlarmColors(QColor alarm1, QColor alarm2)
-{
-    mSettings->setValue(ALARM1COLOR,alarm1);
-    mSettings->setValue(ALARM2COLOR,alarm2);
-     }
-*/
 bool Settings::getAlarm1Type()
 {
     return mSettings->value(ALARM1TYPE).toBool();
@@ -97,7 +80,7 @@ void Settings::setAlarm1Type(bool type)
 
 bool Settings::getAlarm2Type()
 {
-return mSettings->value(ALARM2TYPE).toBool();
+    return mSettings->value(ALARM2TYPE).toBool();
 }
 
 void Settings::setAlarm2Type(bool type)

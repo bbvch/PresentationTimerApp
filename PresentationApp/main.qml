@@ -10,15 +10,14 @@ Window {
     property int presentationTime
     property int dpi: Screen.pixelDensity*25.4
     visible: true
-    width:  400
-    height: 400
+    minimumWidth:  400
+    minimumHeight: 600
 
     StackView {
         id: stack
         property string searchResultsTitle
         anchors.fill: parent
-        width: parent.width
-        focus: true
+        focus:        true
 
         Keys.onReleased: {
             if ((event.key === Qt.Key_F2 || event.key === Qt.Key_Back) && stack.depth > 1) {
@@ -28,6 +27,7 @@ Window {
 
             if(((event.key===Qt.Key_Menu)||(event.key===Qt.Key_F1))&&(stack.currentItem==rootView)) {
                 console.log("Menu pressed")
+                rootView.pausePresentation()
                 stack.push("qrc:///MenuView.qml")
                 console.log(stack.currentItem)
             }
@@ -36,22 +36,10 @@ Window {
         initialItem: RootView {
             id: rootView
         }
+
         onCurrentItemChanged:  {
             if(stack.currentItem==rootView)
-                rootView.stopwatchValue(cppSettings.presentationTime)
+                rootView.stopWatchValue(cppSettings.presentationTime)
         }
-
-        /*onCurrentItemChanged: {
-            if(stack.currentItem!=null)
-                if(stack.currentItem.state==="showingRoot")
-                    toolbar_text.text = qsTr("PropertyCross")
-                else if(stack.currentItem.state==="showingFavourites")
-                    toolbar_text.text = qsTr("Favourites")
-                else if(stack.currentItem.state==="showingProperty")
-                    toolbar_text.text = qsTr("Property Details")
-                else if(stack.currentItem.state==="showingResults")
-                    toolbar_text.text = stack.searchResultsTitle
-        }*/
-
     } // StackView
 } // Window

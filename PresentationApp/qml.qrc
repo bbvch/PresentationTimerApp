@@ -4,5 +4,7 @@
         <file>RootView.qml</file>
         <file>MenuView.qml</file>
         <file>AlarmSettings.qml</file>
+        <file>TimerRect.qml</file>
+        <file>LabelTextInput.qml</file>
     </qresource>
 </RCC>

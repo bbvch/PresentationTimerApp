@@ -4,6 +4,7 @@
 #include <QQmlContext>
 
 #include <QDebug>
+#include <QWindow>
 
 #ifdef Q_OS_ANDROID
 #include <QtAndroidExtras>
@@ -34,6 +35,7 @@ void keepScreenOn()
 int main(int argc, char *argv[])
 {
 
+    /* Set organization information for persistent Settings */
     QCoreApplication::setOrganizationName("bbv Software Solutions AG");
     QCoreApplication::setOrganizationDomain("com.bbvSoftwareSolutions");
     QCoreApplication::setApplicationName("PresentationTimerApp");
@@ -43,27 +45,33 @@ int main(int argc, char *argv[])
 #endif
     QGuiApplication app(argc, argv);
 
+    //Create the app engine
     QQmlApplicationEngine engine;
 
+    //Create some objects that we're gonna use for the app
     PresentationTimer presentationTimer;
     Settings settings;
+
+    //Let the qml know about our cpp-Objects
     engine.rootContext()->setContextProperty("cppPresentationTimer", &presentationTimer);
     engine.rootContext()->setContextProperty("cppSettings", &settings);
 
-
-    if(settings.getAlarm1Color()==QColor(""))
+    //Init the settings
+    if(settings.getFirstAlarmColor()==QColor(""))
     {
-        settings.setAlarm1Color(QColor("yellow"));
+        settings.setFirstAlarmColor(QColor("yellow"));
         settings.setAlarm1Type(false);
-        settings.setAlarm1Value(50);
-        settings.setAlarm2Color(QColor("red"));
+        settings.setFirstAlarmValue(50);
+        settings.setSecondAlarmColor(QColor("red"));
         settings.setAlarm2Type(false);
-        settings.setAlarm2Value(25);
+        settings.setSecondAlarmValue(25);
         settings.setPresentationTime(10);
     }
 
+    //Load the initial qml file
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
+    //Start the app!
     return app.exec();
 
 }
