@@ -3,8 +3,8 @@ TEMPLATE = app
 QT += testlib qml
 CONFIG   += C++11
 SOURCES += \
-    ../PresentationApp/presentationtimer.cpp \
-../PresentationApp/settings.cpp \
+	../PresentationApp/PresentationTimer.cpp \
+	../PresentationApp/PresentationSettings.cpp \
     testpresentationtimer.cpp \
     testsettings.cpp \
     main.cpp
@@ -19,8 +19,8 @@ SOURCES += \
 #include(deployment.pri)
 
 HEADERS += \
-    ../PresentationApp/presentationtimer.h \
-../PresentationApp/settings.h \
+	../PresentationApp/PresentationTimer.h \
+	../PresentationApp/PresentationSettings.h \
     testpresentationtimer.h \
     testsettings.h
 

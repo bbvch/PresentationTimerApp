@@ -10,8 +10,8 @@ Window {
     property int presentationTime
     property int dpi: Screen.pixelDensity*25.4
     visible: true
-    minimumWidth:  400
-    minimumHeight: 600
+    minimumWidth:  480
+    minimumHeight: 800
 
     StackView {
         id: stack
@@ -21,25 +21,28 @@ Window {
 
         Keys.onReleased: {
             if ((event.key === Qt.Key_F2 || event.key === Qt.Key_Back) && stack.depth > 1) {
-                             event.accepted = true;
-                             stack.pop()
+                event.accepted = true;
+                stack.pop()
             }
 
-            if(((event.key===Qt.Key_Menu)||(event.key===Qt.Key_F1))&&(stack.currentItem==rootView)) {
-                console.log("Menu pressed")
-                rootView.pausePresentation()
-                stack.push("qrc:///qml/MenuView.qml")
-                console.log(stack.currentItem)
+            if(((event.key===Qt.Key_Menu) || (event.key===Qt.Key_F1)) && (stack.currentItem==timerView)) {
+                timerView.pause()
+                stack.push("qrc:/SettingsView.qml")
             }
-        }
+        } // Keys.onReleased
 
-        initialItem: RootView {
-            id: rootView
-        }
-
-        onCurrentItemChanged:  {
-            if(stack.currentItem==rootView)
-                rootView.stopWatchValue(cppSettings.presentationTime)
+        initialItem: TimerView {
+            id: timerView
         }
     } // StackView
+
+    Component.onCompleted: {
+        cppPresentationTimer.duration      = cppSettings.duration
+        cppPresentationTimer.attentionTime = cppSettings.duration > cppSettings.attentionTime ? cppSettings.attentionTime : 1000
+        cppPresentationTimer.finalTime     = cppSettings.duration > cppSettings.finalTime     ? cppSettings.finalTime : 0
+
+        timerView.durationValue = cppPresentationTimer.duration
+        timerView.setTimeLabels()
+    }
+
 } // Window

@@ -1,12 +1,11 @@
 import QtQuick 2.0
-import QtQuick.Controls 1.4
-import QtQuick.Layouts 1.2
+import QtQuick.Layouts  1.2
 
 Rectangle {
     id: backgroundColorRect
-    property alias hourItem: hourInput.input
-    property alias minItem:  minInput.input
-    property alias secItem:  secInput.input
+    property alias hourItem: hourInput.value
+    property alias minItem:  minInput.value
+    property alias secItem:  secInput.value
     property alias background: backgroundColorRect.color
     color: "green"
     radius: 10
@@ -16,43 +15,57 @@ Rectangle {
         anchors.right: parent.right
         anchors.centerIn: parent
 
-        LabelTextInput {
+        InputWithLabel {
             id: hourInput
             title: qsTr("Hours")
-//            Layout.preferredWidth: 50
-//            Layout.preferredHeight: 50
+            validator: IntValidator{bottom: 0; top: 99;}
+
+            onChangedByUser: {
+                inputValuesChanged()
+            }
         }
 
-        LabelTextInput {
+        InputWithLabel {
             id: minInput
             title: qsTr("Minutes")
-//            Layout.preferredWidth: 50
-//            Layout.preferredHeight: 50
+            validator: IntValidator{bottom: 0; top: 59;}
+
+            onChangedByUser: {
+                inputValuesChanged()
+            }
         }
 
-        LabelTextInput {
+        InputWithLabel {
             id: secInput
             title: qsTr("Seconds")
-//            Layout.preferredWidth: 50
-//            Layout.preferredHeight: 50
+            validator: IntValidator{bottom: 0; top: 59;}
+
+            onChangedByUser: {
+                inputValuesChanged()
+            }
         }
     }
 
+    function deselectAll() {
+        hourInput.deselect()
+        minInput.deselect()
+        secInput.deselect()
+    }
 
+    function inputValuesChanged() {
+        var value = (hourInput.value*3600 + minInput.value*60 + secInput.value)*1000
+        cppSettings.duration = value
+        cppPresentationTimer.duration = cppSettings.duration
 
-
-    Connections {
-        target: cppPresentationTimer
-
-        onAlarmYellow: {
-            // console.log("Timer tick")
-            backgroundColorRect.color = cppSettings.firstAlarmColor
+        if(cppSettings.duration < cppSettings.attentionAlarmValue) {
+            cppSettings.attentionTime = 0
+            cppPresentationTimer.attentionTime = 0
         }
-        onAlarmRed: {
-            // console.log("Timer tick")
-            if(cppPresentationTimer.isRunning)
-            backgroundColorRect.color = cppSettings.secondAlarmColor
+
+        if(cppSettings.duration < cppSettings.finalTime) {
+            cppSettings.finalTime = 0
+            cppPresentationTimer.finalTime = 0
         }
-    } // Connections
+    }
 } // Rectangle
 

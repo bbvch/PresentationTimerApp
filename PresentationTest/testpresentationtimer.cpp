@@ -14,11 +14,11 @@ TestPresentationTimer::TestPresentationTimer(QObject *parent) : QObject(parent)
 void TestPresentationTimer::can_successfully_create_and_configure_Timer()
 {
     PresentationTimer* timer = new PresentationTimer(this);
-    QCOMPARE(timer->setPresentationTime(10),true);
-    QCOMPARE(timer->getTime(),0);
-    QCOMPARE(timer->getRemainingTime(),10);
-    QCOMPARE(timer->setPresentationTime(-10),false);
-    QCOMPARE(timer->setPresentationTime(0),false);
+    QCOMPARE(timer->setDuration(10),true);
+//    QCOMPARE(timer->getTime(),0);
+    QCOMPARE(timer->getRemainingTime(), (quint32)10);
+    QCOMPARE(timer->setDuration(-10),false);
+    QCOMPARE(timer->setDuration(0),false);
     //Try setting some alarms
     QCOMPARE(timer->setThresholdAlarms(50,25),true);
     QCOMPARE(timer->setThresholdAlarms(50,50),true);
@@ -32,22 +32,22 @@ void TestPresentationTimer::start_and_stop_a_timer_will_do_so()
     PresentationTimer* timer = new PresentationTimer(this);
     QSignalSpy spyTick(timer, SIGNAL(presentationTimerTick()));
     QSignalSpy spyRunning(timer, SIGNAL(runningChanged()));
-    QCOMPARE(timer->setPresentationTime(10),true);
-    QCOMPARE(timer->getPresentationTime(),10);
-    QCOMPARE(timer->startTimer(),true);
+    QCOMPARE(timer->setDuration(10),true);
+    QCOMPARE(timer->getDuration(), (quint32)10);
+    timer->start();
     QTest::qWait(1200);
     //timer should have decreased/increased by one
-    QCOMPARE(timer->getRemainingTime(),9);
-    QCOMPARE(timer->getTime(),1);
+    QCOMPARE(timer->getRemainingTime(), (quint32)9);
+//    QCOMPARE(timer->getTime(),1);
     QCOMPARE(spyRunning.count(),1);
     QCOMPARE(timer->isRunning(),true);
-    QCOMPARE(timer->stopTimer(),true);
+    timer->stop();
     QCOMPARE(timer->isRunning(),false);
     QCOMPARE(spyTick.count(),1);
     QTest::qWait(1200);
     //timer should have stopped
-    QCOMPARE(timer->getRemainingTime(),9);
-    QCOMPARE(timer->getTime(),1);
+    QCOMPARE(timer->getRemainingTime(), (quint32)9);
+//    QCOMPARE(timer->getTime(),1);
     QCOMPARE(spyRunning.count(),2);
     //use change Running state this time to START the timer again
     QCOMPARE(timer->changeRunningState(true),true);
@@ -55,8 +55,8 @@ void TestPresentationTimer::start_and_stop_a_timer_will_do_so()
     QCOMPARE(spyTick.count(),1);
     QTest::qWait(1200);
     //timer should have started again
-    QCOMPARE(timer->getRemainingTime(),8);
-    QCOMPARE(timer->getTime(),2);
+    QCOMPARE(timer->getRemainingTime(), (quint32)8);
+//    QCOMPARE(timer->getTime(),2);
     QCOMPARE(spyRunning.count(),3);
     QCOMPARE(spyTick.count(),2);
 }
@@ -64,11 +64,11 @@ void TestPresentationTimer::start_and_stop_a_timer_will_do_so()
 void TestPresentationTimer::percentage_alarms_are_being_signaled()
 {
     PresentationTimer* timer = new PresentationTimer(this);
-    QCOMPARE(timer->setPresentationTime(4),true);
+    QCOMPARE(timer->setDuration(4),true);
     QCOMPARE(timer->setThresholdAlarms(50,25),true);
     QSignalSpy spyYellow(timer, SIGNAL(alarmYellow()));
     QSignalSpy spyRed(timer, SIGNAL(alarmRed()));
-    QCOMPARE(timer->startTimer(),true);
+    timer->start();
     QTest::qWait(1200);
     //no Alarms should have been triggered
     QCOMPARE(spyYellow.count(),0);
@@ -88,12 +88,11 @@ void TestPresentationTimer::percentage_alarms_are_being_signaled()
 void TestPresentationTimer::time_alarms_are_being_signaled()
 {
     PresentationTimer* timer = new PresentationTimer(this);
-    QCOMPARE(timer->setPresentationTime(4),true);
+    QCOMPARE(timer->setDuration(4),true);
     QCOMPARE(timer->setThresholdAlarms(2,1),true);
-    QCOMPARE(timer->setAlarmTypes(true,true),true);
     QSignalSpy spyYellow(timer, SIGNAL(alarmYellow()));
     QSignalSpy spyRed(timer, SIGNAL(alarmRed()));
-    QCOMPARE(timer->startTimer(),true);
+    timer->start();
     QTest::qWait(1200);
     //three seconds left -> no Alarms
     QCOMPARE(spyYellow.count(),0);

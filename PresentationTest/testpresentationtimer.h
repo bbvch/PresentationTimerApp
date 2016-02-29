@@ -3,7 +3,7 @@
 
 #include <QtTest/QtTest>
 #include <QObject>
-#include "presentationtimer.h"
+#include "PresentationTimer.h"
 
 
 
