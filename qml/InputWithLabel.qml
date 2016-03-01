@@ -32,24 +32,30 @@ Rectangle {
             Layout.alignment:    Qt.AlignCenter
             horizontalAlignment: Text.Center
             inputMethodHints:    Qt.ImhDigitsOnly
-            KeyNavigation.tab:   buttonStart
+            inputMask: "00"
 
             onTextChanged: {
-                if(focus)
+                if(focus) {
+                    value = parseInt(text, 10)
                     changedByUser()
+                }
             }
 
             onFocusChanged: {
-                if(focus)
-                    textInput.selectAll()
+                cursorVisible = false
+                if(focus) {
+                    cursorPosition = 0
+                    color = "blue"
+                }
                 else
-                    textInput.deselect()
+                    color = "black"
             }
         }
     } // ColumnLayout
 
     onValueChanged: {
-        textInput.text = zeroFill(root.value)
+        if(!focus)
+            textInput.text = zeroFill(root.value)
     }
 
     function zeroFill(value) {
