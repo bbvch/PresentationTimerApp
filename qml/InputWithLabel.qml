@@ -51,6 +51,11 @@ Rectangle {
         textInput.text = zeroFill(root.value)
     }
 
+    function deselect() {
+        textInput.deselect()
+        textInput.focus = false
+    }
+
     function zeroFill(value) {
         var zerofilled = ('00'+value).slice(-2);
         return zerofilled;

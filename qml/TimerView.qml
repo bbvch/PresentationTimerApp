@@ -15,15 +15,14 @@ Rectangle {
             id: timerRect
             Layout.fillWidth: true
             Layout.fillHeight: true
-            color: "green"
+            color: cppSettings.normalColor
             radius: 10
 
             LoadCircle {
                 id: circleItem
                 anchors.centerIn: parent
+                loadtimer: durationValue
             }
-
-            Component.onCompleted: secItem = durationValue;
         }
 
         ButtonControl {
@@ -32,55 +31,69 @@ Rectangle {
             Layout.preferredHeight: parent.height/12
 
             onStartClicked: {
+                timerRect.deselectAll()
                 circleItem.animation.restart()
-                presentationTimer.start()
+                cppPresentationTimer.start()
             }
 
             onPauseClicked: {
-                circleItem.animation.pause()
-                presentationTimer.stop()
+                timerRect.deselectAll()
+                if(circleItem.running)
+                    circleItem.animation.pause()
+                cppPresentationTimer.stop()
             }
 
             onResumeClicked: {
+                timerRect.deselectAll()
                 circleItem.animation.resume()
-                presentationTimer.start()
+                cppPresentationTimer.start()
             }
 
             onResetClicked: {
-                circleItem.animation.stop()
+                timerRect.deselectAll()
                 circleItem.reset()
-                presentationTimer.stop()
-                presentationTimer.timeValue = durationValue
-                timerRect.secItem =  presentationTimer.timeValue
+                timerRect.background = cppSettings.normalColor
+                cppPresentationTimer.reset()
+                setTimeLabels()
                 buttonControl.reset()
             }
         }
     } // ColumnLayout
 
-    Timer {
-        id: presentationTimer
-        property int timeValue: 0
-        interval: 1000 //ms
-        repeat: true
+    Connections {
+        target: cppPresentationTimer
 
-        onTriggered: {
-            if(timeValue > 0) {
-                --timeValue
-                timerRect.secItem =  timeValue
-            }
-            else {
-                presentationTimer.stop()
-                timeValue = durationValue
-                timerRect.secItem =  timeValue
-                circleItem.reset()
-                buttonControl.reset()
-            }
+        onSigSecondsTick: {
+            setTimeLabels()
         }
+
+        onSigAlarmAttention: {
+            if(cppPresentationTimer.isRunning)
+                timerRect.background = cppSettings.attentionColor
+        }
+
+        onSigAlarmFinal: {
+            if(cppPresentationTimer.isRunning)
+                timerRect.background= cppSettings.finalColor
+        }
+    } // Connections
+
+    function setTimeLabels()
+    {
+        timerRect.secItem    = cppPresentationTimer.remainingSec
+        timerRect.minItem    = cppPresentationTimer.remainingMin
+        timerRect.hourItem   = cppPresentationTimer.remainingHour
     }
 
     onDurationValueChanged: {
         presentationTimer.timeValue = durationValue
         circleItem.loadtimer = durationValue*1000 // in ms
+    }
+
+    function pause()
+    {
+        buttonControl.pauseClicked()
+        buttonControl.updateButtons()
     }
 }
 
