@@ -16,10 +16,10 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-	//Create some objects that we're gonna use for the app
+    //Create some objects that we're gonna use for the app
     PresentationSettings settings;
 
-	//Let the qml know about our cpp-Objects
+    //Let the qml know about our cpp-Objects
     engine.rootContext()->setContextProperty("cppSettings", &settings);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
