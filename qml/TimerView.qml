@@ -21,7 +21,6 @@ Rectangle {
             LoadCircle {
                 id: circleItem
                 anchors.centerIn: parent
-                loadtimer: durationValue
             }
 
             Component.onCompleted: secItem = durationValue;
