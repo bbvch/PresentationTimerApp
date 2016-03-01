@@ -4,7 +4,8 @@ QT += qml quick
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    PresentationSettings.cpp
+    PresentationSettings.cpp \
+    PresentationTimer.cpp
 
 RESOURCES += qml.qrc
 
@@ -15,5 +16,6 @@ QML_IMPORT_PATH =
 include(deployment.pri)
 
 HEADERS += \
-    PresentationSettings.h
+    PresentationSettings.h \
+    PresentationTimer.h
 
