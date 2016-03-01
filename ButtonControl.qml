@@ -7,10 +7,20 @@ RowLayout {
     property alias startBtn: startButton
     layoutDirection: Qt.RightToLeft
 
-    signal clicked
+    signal startClicked
+    signal pauseClicked
+    signal resumeClicked
+    signal resetClicked
+
+    function reset() {
+        startButton.text = "Start"
+        startButton.pauseVisible = false
+        resetButton.visible = false
+    }
 
     Button {
         id: startButton
+        property bool pauseVisible: false
         text: "Start"
 
         Layout.fillWidth: true
@@ -19,15 +29,24 @@ RowLayout {
 
         onClicked: {
             if(resetButton.visible) {
-                startButton.text = "Start"
-                resetButton.visible = false
+
+                if(pauseVisible === true) {
+                    pauseClicked()
+                    startButton.text = "Resume"
+                     pauseVisible = false
+                }
+                else {
+                    resumeClicked()
+                    startButton.text = "Pause"
+                     pauseVisible = true
+                }
             }
             else {
                 startButton.text = "Pause"
+                pauseVisible = true
                 resetButton.visible = true
+                startClicked()
             }
-
-            rowLayout.clicked()
         }
     } // Button
 
@@ -38,6 +57,10 @@ RowLayout {
         Layout.fillWidth: true
         Layout.preferredHeight: parent.height
 
+        onClicked: {
+            reset()
+            resetClicked()
+        }
     } // Button
 }
 

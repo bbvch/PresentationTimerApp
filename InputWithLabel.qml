@@ -5,7 +5,7 @@ import QtQuick.Layouts 1.2
 Rectangle {
     id: root
     property alias title: label.text
-    property alias input: textInput
+    property int valueInput
     width: 80
     height: 80
     color: "transparent"
@@ -32,5 +32,12 @@ Rectangle {
             KeyNavigation.tab:   buttonStart
         }
     } // ColumnLayout
+
+    onValueInputChanged: textInput.text = zeroFill(root.valueInput)
+
+    function zeroFill(value) {
+        var zerofilled = ('00'+value).slice(-2);
+        return zerofilled;
+    }
 }
 

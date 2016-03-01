@@ -4,9 +4,9 @@ import QtQuick.Layouts 1.2
 
 Rectangle {
     id: backgroundColorRect
-    property alias hourItem: hourInput.input
-    property alias minItem:  minInput.input
-    property alias secItem:  secInput.input
+    property alias hourItem: hourInput.valueInput
+    property alias minItem:  minInput.valueInput
+    property alias secItem:  secInput.valueInput
     property alias background: backgroundColorRect.color
     color: "green"
     radius: 10

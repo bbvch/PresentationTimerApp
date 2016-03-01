@@ -8,16 +8,12 @@ Row{
     property color borderColor: "grey"
     property int   pathWidth:   20
     property alias running:     circleAnimation.running
+    property alias animation:   circleAnimation
     property bool  finished:    false;
 
-    function start(){
+    function reset(){
         circlePart1.rotation = 0
         circlePart2.rotation = 0
-        circleAnimation.start()
-    }
-
-    function stop(){
-        circleAnimation.stop()
     }
 
     width:  parent.width * 0.8
