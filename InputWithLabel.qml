@@ -5,8 +5,10 @@ import QtQuick.Layouts 1.2
 Rectangle {
     id: root
     property alias title: label.text
-    property alias input: textInput
-    width: 80
+    property alias validator: textInput.validator
+    property int   value
+
+    width:  80
     height: 80
     color: "transparent"
 
@@ -29,7 +31,7 @@ Rectangle {
             Layout.alignment:    Qt.AlignCenter
             horizontalAlignment: Text.Center
             inputMethodHints:    Qt.ImhDigitsOnly
-            KeyNavigation.tab:   buttonStart
+            inputMask: "00"
         }
     } // ColumnLayout
 }
