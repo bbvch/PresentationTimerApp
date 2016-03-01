@@ -11,8 +11,8 @@ class PresentationSettings : public QSettings
     Q_PROPERTY(QColor normalColor          READ getNormalColor         WRITE setNormalColor         NOTIFY normalColorChanged)
     Q_PROPERTY(QColor attentionColor       READ getAttentionAlarmColor WRITE setAttentionAlarmColor NOTIFY attentionAlarmColorChanged)
     Q_PROPERTY(QColor finalColor           READ getFinaleAlarmColor    WRITE setFinalAlarmColor     NOTIFY finalAlarmColorChanged)
-    Q_PROPERTY(quint32 attentionTime       READ getAttentionTime  WRITE setAttentionTime       NOTIFY attentionAlarmValueChanged)
-    Q_PROPERTY(quint32 finalTime           READ getFinalTime      WRITE setFinalTime           NOTIFY finalAlarmValueChanged)
+    Q_PROPERTY(quint32 attentionTime       READ getAttentionTime       WRITE setAttentionTime       NOTIFY attentionAlarmValueChanged)
+    Q_PROPERTY(quint32 finalTime           READ getFinalTime           WRITE setFinalTime           NOTIFY finalAlarmValueChanged)
     Q_PROPERTY(quint32 duration            READ getDuration            WRITE setDuration            NOTIFY durationChanged)
 
 public:

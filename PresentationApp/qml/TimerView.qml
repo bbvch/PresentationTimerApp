@@ -4,8 +4,6 @@ import QtQuick.Layouts 1.1
 Rectangle {
     id: timerWindow
     property  int durationValue: 0
-    visible: true
-
 
     ColumnLayout {
         id: colLayout
@@ -23,7 +21,6 @@ Rectangle {
             LoadCircle {
                 id: circleItem
                 anchors.centerIn: parent
-                loadtimer: durationValue
             }
         }
 
@@ -85,6 +82,11 @@ Rectangle {
         timerRect.secItem    = cppPresentationTimer.remainingSec
         timerRect.minItem    = cppPresentationTimer.remainingMin
         timerRect.hourItem   = cppPresentationTimer.remainingHour
+    }
+
+    onDurationValueChanged: {
+        cppPresentationTimer.timeValue = durationValue
+        circleItem.loadtimer = durationValue // in ms
     }
 
     function pause()

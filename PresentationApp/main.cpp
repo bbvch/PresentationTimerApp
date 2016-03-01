@@ -6,8 +6,8 @@
 #include <QtAndroidExtras>
 #endif
 
-#include "PresentationTimer.h"
 #include "PresentationSettings.h"
+#include "PresentationTimer.h"
 
 #ifdef Q_OS_ANDROID
 
@@ -43,13 +43,13 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-	//Create some objects that we're gonna use for the app
-	PresentationTimer presentationTimer;
+    //Create some objects that we're gonna use for the app
     PresentationSettings settings;
+    PresentationTimer presentationTimer;
 
-	//Let the qml know about our cpp-Objects
-	engine.rootContext()->setContextProperty("cppPresentationTimer", &presentationTimer);
+    //Let the qml know about our cpp-Objects
     engine.rootContext()->setContextProperty("cppSettings", &settings);
+    engine.rootContext()->setContextProperty("cppPresentationTimer", &presentationTimer);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
