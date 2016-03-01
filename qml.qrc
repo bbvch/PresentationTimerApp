@@ -1,11 +1,22 @@
 <RCC>
     <qresource prefix="/">
-        <file alias="main.qml">qml/main.qml</file>
+        <file alias="TimerView.qml">qml/TimerView.qml</file>
         <file alias="ButtonControl.qml">qml/ButtonControl.qml</file>
         <file alias="TimerRect.qml">qml/TimerRect.qml</file>
         <file alias="LoadCircle.qml">qml/LoadCircle.qml</file>
         <file alias="InputWithLabel.qml">qml/InputWithLabel.qml</file>
-        <file alias="TimerView.qml">qml/TimerView.qml</file>
         <file alias="SettingsView.qml">qml/SettingsView.qml</file>
+        <file alias="main.qml">qml/main.qml</file>
+        <file alias="MultiSlider.qml">qml/MultiSlider.qml</file>
+    </qresource>
+    <qresource prefix="/images">
+		<file alias="triangle_left.png">images/triangle_left.png</file>
+		<file alias="triangle_left_pressed.png">images/triangle_left_pressed.png</file>
+		<file alias="triangle_right.png">images/triangle_right.png</file>
+		<file alias="triangle_right_pressed.png">images/triangle_right_pressed.png</file>
+		<file alias="triangle_bottom.png">images/triangle_bottom.png</file>
+		<file alias="triangle_bottom_pressed.png">images/triangle_bottom_pressed.png</file>
+		<file alias="triangle_top.png">images/triangle_top.png</file>
+		<file alias="triangle_top_pressed.png">images/triangle_top_pressed.png</file>
     </qresource>
 </RCC>
