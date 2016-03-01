@@ -21,7 +21,6 @@ Rectangle {
             LoadCircle {
                 id: circleItem
                 anchors.centerIn: parent
-                loadtimer: durationValue
             }
         }
 
@@ -86,8 +85,8 @@ Rectangle {
     }
 
     onDurationValueChanged: {
-        presentationTimer.timeValue = durationValue
-        circleItem.loadtimer = durationValue*1000 // in ms
+        cppPresentationTimer.timeValue = durationValue
+        circleItem.loadtimer = durationValue // in ms
     }
 
     function pause()
