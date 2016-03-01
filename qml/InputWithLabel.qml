@@ -32,7 +32,6 @@ Rectangle {
             Layout.alignment:    Qt.AlignCenter
             horizontalAlignment: Text.Center
             inputMethodHints:    Qt.ImhDigitsOnly
-            KeyNavigation.tab:   buttonStart
 
             onTextChanged: {
                 if(focus)
