@@ -15,12 +15,13 @@ Rectangle {
             id: timerRect
             Layout.fillWidth: true
             Layout.fillHeight: true
-            color: "green"
+            color: cppSettings.normalColor
             radius: 10
 
             LoadCircle {
                 id: circleItem
                 anchors.centerIn: parent
+                loadtimer: durationValue
             }
 
             Component.onCompleted: secItem = durationValue;
@@ -32,23 +33,28 @@ Rectangle {
             Layout.preferredHeight: parent.height/12
 
             onStartClicked: {
+                timerRect.deselectAll()
                 circleItem.animation.restart()
                 presentationTimer.start()
             }
 
             onPauseClicked: {
-                circleItem.animation.pause()
+                timerRect.deselectAll()
+                if(circleItem.running)
+                    circleItem.animation.pause()
                 presentationTimer.stop()
             }
 
             onResumeClicked: {
+                timerRect.deselectAll()
                 circleItem.animation.resume()
                 presentationTimer.start()
             }
 
             onResetClicked: {
-                circleItem.animation.stop()
+                timerRect.deselectAll()
                 circleItem.reset()
+                timerRect.background = cppSettings.normalColor
                 presentationTimer.stop()
                 presentationTimer.timeValue = durationValue
                 timerRect.secItem =  presentationTimer.timeValue
