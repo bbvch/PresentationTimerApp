@@ -5,6 +5,7 @@
         <file alias="TimerRect.qml">qml/TimerRect.qml</file>
         <file alias="LoadCircle.qml">qml/LoadCircle.qml</file>
         <file alias="InputWithLabel.qml">qml/InputWithLabel.qml</file>
-		<file alias="TimerView.qml">qml/TimerView.qml</file>
+        <file alias="TimerView.qml">qml/TimerView.qml</file>
+        <file alias="SettingsView.qml">qml/SettingsView.qml</file>
     </qresource>
 </RCC>
