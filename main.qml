@@ -15,12 +15,17 @@ Window {
         anchors.margins: 10
         spacing: 10
 
-        Rectangle {
+        TimerRect {
             id: backgroundRect
             Layout.fillWidth: true
             Layout.fillHeight: true
             color: "green"
             radius: 10
+
+            LoadCircle {
+                id: cirleItem
+                anchors.centerIn: parent
+            }
         }
 
         ButtonControl {
@@ -29,7 +34,7 @@ Window {
             Layout.preferredHeight: parent.height/12
 
             onClicked: {
-                backgroundRect.color = "red"
+                cirleItem.start()
             }
         }
     } // ColumnLayout

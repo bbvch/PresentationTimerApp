@@ -2,5 +2,8 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>ButtonControl.qml</file>
+        <file>TimerRect.qml</file>
+        <file>LoadCircle.qml</file>
+        <file>InputWithLabel.qml</file>
     </qresource>
 </RCC>
