@@ -1,14 +1,9 @@
 import QtQuick 2.5
-import QtQuick.Window 2.2
-import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
 
-Window {
-    id: rootWindow
-    property int timeValue: 4
-    visible: true
-    minimumHeight: 800
-    minimumWidth:  480
+Rectangle {
+    id: timerWindow
+    property  int durationValue: 0
 
     ColumnLayout {
         id: colLayout

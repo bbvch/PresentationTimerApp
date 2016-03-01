@@ -5,10 +5,13 @@ import QtQuick.Layouts 1.2
 Rectangle {
     id: root
     property alias title: label.text
-    property int valueInput
-    width: 80
+    property alias validator: textInput.validator
+    property int   value
+
+    width:  80
     height: 80
     color: "transparent"
+    signal changedByUser()
 
     ColumnLayout {
         id: inputColumn
@@ -30,14 +33,27 @@ Rectangle {
             horizontalAlignment: Text.Center
             inputMethodHints:    Qt.ImhDigitsOnly
             KeyNavigation.tab:   buttonStart
+
+            onTextChanged: {
+                if(focus)
+                    changedByUser()
+            }
+
+            onFocusChanged: {
+                if(focus)
+                    textInput.selectAll()
+                else
+                    textInput.deselect()
+            }
         }
     } // ColumnLayout
 
-    onValueInputChanged: textInput.text = zeroFill(root.valueInput)
+    onValueChanged: {
+        textInput.text = zeroFill(root.value)
+    }
 
     function zeroFill(value) {
         var zerofilled = ('00'+value).slice(-2);
         return zerofilled;
     }
 }
-
