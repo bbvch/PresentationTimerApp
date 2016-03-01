@@ -26,6 +26,7 @@ Window {
             }
 
             if(((event.key===Qt.Key_Menu) || (event.key===Qt.Key_F1)) && (stack.currentItem==timerView)) {
+                timerView.pause()
                 stack.push("qrc:/SettingsView.qml")
             }
         } // Keys.onReleased
@@ -36,6 +37,12 @@ Window {
     } // StackView
 
     Component.onCompleted: {
-        timerView.durationValue = 5 // Set to 5 seconds
+        cppPresentationTimer.duration      = cppSettings.duration
+        cppPresentationTimer.attentionTime = cppSettings.duration > cppSettings.attentionTime ? cppSettings.attentionTime : 1000
+        cppPresentationTimer.finalTime     = cppSettings.duration > cppSettings.finalTime     ? cppSettings.finalTime : 0
+
+        timerView.durationValue = cppPresentationTimer.duration
+        timerView.setTimeLabels()
     }
+
 } // Window

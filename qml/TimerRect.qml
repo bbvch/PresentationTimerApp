@@ -19,18 +19,52 @@ Rectangle {
             id: hourInput
             title: qsTr("Hours")
             validator: IntValidator{bottom: 0; top: 99;}
+
+            onChangedByUser: {
+                inputValuesChanged()
+            }
         }
 
         InputWithLabel {
             id: minInput
             title: qsTr("Minutes")
             validator: IntValidator{bottom: 0; top: 59;}
+
+            onChangedByUser: {
+                inputValuesChanged()
+            }
         }
 
         InputWithLabel {
             id: secInput
             title: qsTr("Seconds")
             validator: IntValidator{bottom: 0; top: 59;}
+
+            onChangedByUser: {
+                inputValuesChanged()
+            }
+        }
+    }
+
+    function deselectAll() {
+        hourInput.deselect()
+        minInput.deselect()
+        secInput.deselect()
+    }
+
+    function inputValuesChanged() {
+        var value = (hourInput.value*3600 + minInput.value*60 + secInput.value)*1000
+        cppSettings.duration = value
+        cppPresentationTimer.duration = cppSettings.duration
+
+        if(cppSettings.duration < cppSettings.attentionAlarmValue) {
+            cppSettings.attentionTime = 0
+            cppPresentationTimer.attentionTime = 0
+        }
+
+        if(cppSettings.duration < cppSettings.finalTime) {
+            cppSettings.finalTime = 0
+            cppPresentationTimer.finalTime = 0
         }
     }
 } // Rectangle

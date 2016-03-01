@@ -30,20 +30,20 @@ RowLayout {
         onClicked: {
             if(resetButton.visible) {
 
-                if(pauseVisible === true) {
+                if(startButton.pauseVisible === true) {
                     pauseClicked()
                     startButton.text = "Resume"
-                     pauseVisible = false
+                     startButton.pauseVisible = false
                 }
                 else {
                     resumeClicked()
                     startButton.text = "Pause"
-                     pauseVisible = true
+                    startButton.pauseVisible = true
                 }
             }
             else {
                 startButton.text = "Pause"
-                pauseVisible = true
+                startButton.pauseVisible = true
                 resetButton.visible = true
                 startClicked()
             }
@@ -62,6 +62,16 @@ RowLayout {
             resetClicked()
         }
     } // Button
+
+    function updateButtons() {
+        if(resetButton.visible) {
+
+            if(startButton.pauseVisible === true) {
+                startButton.text = "Resume"
+                 startButton.pauseVisible = false
+            }
+        }
+    }
 }
 
 
