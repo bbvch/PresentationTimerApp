@@ -85,7 +85,8 @@ Rectangle {
     }
 
     onDurationValueChanged: {
-        circleItem.loadtimer = durationValue
+        cppPresentationTimer.timeValue = durationValue
+        circleItem.loadtimer = durationValue // in ms
     }
 
     function pause()
