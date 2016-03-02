@@ -20,3 +20,9 @@ Nenne die neue Funktion zeroFill(). Sie gibt als Return den neuen String zurück
 ----------------
 - Wenn die zwei Zahlen im TextInput "Hours" eingegeben worden sind, dann soll der Fokus automatisch auf "Minutes" wechseln.
 - Wenn die zwei Zahlen im TextInput "Minutes" eingegeben worden sind, dann soll der Fokus automatisch auf "Seconds" wechseln.
+
+
+3.) Timer in main.qml (BONUS)
+---------------------
+Füge einen Timer namens "presentationTimer" mit statischem Wert hinzu, welcher die Sekundenanzeige updated.
+Dieser Timer muss gestartet, pausiert und auch zurückstellbar sein
