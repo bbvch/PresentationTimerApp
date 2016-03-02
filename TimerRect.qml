@@ -19,16 +19,28 @@ Rectangle {
         InputWithLabel {
             id: hourInput
             title: qsTr("Hours")
+
+            onCursorPosChanged: {
+                minInput.setInputFocus()
+            }
         }
 
         InputWithLabel {
             id: minInput
             title: qsTr("Minutes")
+
+            onCursorPosChanged: {
+                secInput.setInputFocus()
+            }
         }
 
         InputWithLabel {
             id: secInput
             title: qsTr("Seconds")
+
+            onCursorPosChanged: {
+                secInput.setInputFocus()
+            }
         }
     }
 } // Rectangle
