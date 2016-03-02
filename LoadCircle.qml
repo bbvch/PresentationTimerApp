@@ -3,7 +3,7 @@ import QtQuick 2.0
 Row{
     id: circle
 
-    property int   loadtimer:   4000
+    property int   loadtimer:   10000  // In ms
     property color circleColor: "transparent"
     property color borderColor: "grey"
     property int   pathWidth:   20
@@ -12,6 +12,7 @@ Row{
     property bool  finished:    false;
 
     function reset(){
+        circleAnimation.stop()
         circlePart1.rotation = 0
         circlePart2.rotation = 0
     }
