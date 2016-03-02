@@ -19,3 +19,6 @@ HEADERS += \
     PresentationSettings.h \
     PresentationTimer.h
 
+DISTFILES += \
+    readme.txt
+
