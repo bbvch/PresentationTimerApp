@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.1
 
 Rectangle {
     id: timerWindow
-    property  int durationValue: 0
+    property int durationValue: 0
 
     ColumnLayout {
         id: colLayout
@@ -23,7 +23,7 @@ Rectangle {
                 anchors.centerIn: parent
             }
 
-            Component.onCompleted: secItem = timeValue;
+            Component.onCompleted: secItem = durationValue;
         }
 
         ButtonControl {
@@ -50,8 +50,8 @@ Rectangle {
                 circleItem.animation.stop()
                 circleItem.reset()
                 presentationTimer.stop()
-                timeValue = 4
-                timerRect.secItem =  timeValue
+                presentationTimer.timeValue = durationValue
+                timerRect.secItem =  presentationTimer.timeValue
                 buttonControl.reset()
             }
         }
@@ -59,6 +59,7 @@ Rectangle {
 
     Timer {
         id: presentationTimer
+        property int timeValue: durationValue
         interval: 1000 //ms
         repeat: true
 
@@ -69,7 +70,7 @@ Rectangle {
             }
             else {
                 presentationTimer.stop()
-                timeValue = 4
+                timeValue = durationValue
                 timerRect.secItem =  timeValue
                 circleItem.reset()
                 buttonControl.reset()

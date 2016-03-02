@@ -4,7 +4,6 @@ import QtQuick.Layouts 1.1
 
 Window {
     id: rootWindow
-    property int timeValue: 4
     visible: true
     minimumHeight: 800
     minimumWidth:  480
@@ -12,6 +11,7 @@ Window {
     TimerView {
         id: timerView
         anchors.fill: parent
+        durationValue: 10
     }
 }
 
