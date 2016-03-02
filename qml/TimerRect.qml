@@ -20,6 +20,10 @@ Rectangle {
             title: qsTr("Hours")
             validator: IntValidator{bottom: 0; top: 99;}
 
+            onCursorPosChanged: {
+                minInput.setInputFocus(true)
+            }
+
             onChangedByUser: {
                 inputValuesChanged()
             }
@@ -29,6 +33,10 @@ Rectangle {
             id: minInput
             title: qsTr("Minutes")
             validator: IntValidator{bottom: 0; top: 59;}
+
+            onCursorPosChanged: {
+                secInput.setInputFocus(true)
+            }
 
             onChangedByUser: {
                 inputValuesChanged()
@@ -47,9 +55,9 @@ Rectangle {
     }
 
     function deselectAll() {
-        hourInput.deselect()
-        minInput.deselect()
-        secInput.deselect()
+        hourInput.setInputFocus(false)
+        minInput.setInputFocus(false)
+        secInput.setInputFocus(false)
     }
 
     function inputValuesChanged() {
