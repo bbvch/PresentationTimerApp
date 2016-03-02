@@ -66,8 +66,8 @@ Rectangle {
             textInput.text = zeroFill(root.value)
     }
 
-    function setInputFocus() {
-        textInput.focus = true
+    function setInputFocus(focus) {
+        textInput.focus = focus
     }
 
     function zeroFill(value) {
