@@ -11,7 +11,7 @@ Es soll bis auf die Marigins den ganzen Screen füllen
 Ändert sich die Property durationValue, dann soll sich auch die presentationTimer.timevalue und circleItem.loadTimer ändern
 
 
-2.) Einfügen eines StackViews
+3.) Einfügen eines StackViews
 --------------------------------------
 - Im main.qml soll die Umschaltung zwischen TimerView und SettingsView realisiert werden
 - Mit Key_menu und Key_F1 soll auf SettingsView umgeschaltet werden
