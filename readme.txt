@@ -7,6 +7,12 @@ Entwickle ein Eingabefelder mit Überschrift aus "Textinput" und "Label".
 Label ist Bestandteil QtQuick.Controls 1.4
 Nenne das neue Element InputWithLabel.qml
 Zum Testen kann das Element ins backgroundRect eingefügt werden.
+Das neue Element soll folgende Properties besitzen:
+- title         (Zum setzen des Labeltextes)
+- validator     (für die Eingabe der Zahlewerte 0-59 oder 0-99)
+- value         (Integerwert des dargestellten Textes)
+
+Das Eingabefeld soll nur Zahlen zulassen.
 
 2.) Zeitanzeige
 ----------------
