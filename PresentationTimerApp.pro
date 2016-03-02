@@ -17,3 +17,6 @@ include(deployment.pri)
 HEADERS += \
     PresentationSettings.h
 
+DISTFILES += \
+    readme.txt
+
