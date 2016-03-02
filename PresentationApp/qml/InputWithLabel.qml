@@ -11,6 +11,7 @@ Rectangle {
     width:  80
     height: 80
     color: "transparent"
+    signal cursorPosChanged()
     signal changedByUser()
 
     ColumnLayout {
@@ -33,6 +34,13 @@ Rectangle {
             horizontalAlignment: Text.Center
             inputMethodHints:    Qt.ImhDigitsOnly
             inputMask: "00"
+
+            onCursorPositionChanged: {
+                if(cursorPosition==2) {
+                    cursorPosition = 0
+                    cursorPosChanged()
+                }
+            }
 
             onTextChanged: {
                 if(focus) {
@@ -58,9 +66,8 @@ Rectangle {
             textInput.text = zeroFill(root.value)
     }
 
-    function deselect() {
-        textInput.deselect()
-        textInput.focus = false
+    function setInputFocus(focus) {
+        textInput.focus = focus
     }
 
     function zeroFill(value) {
